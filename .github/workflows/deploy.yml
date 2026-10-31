@@ -29,7 +29,7 @@ jobs:
         run: |
           set -euo pipefail
           shopt -s nullglob
-          cp -- index.html app.js styles.css site/
+          cp -- *.html *.js *.css site/
           for pdf in ./*.pdf; do
             cp -- "$pdf" site/
           done
