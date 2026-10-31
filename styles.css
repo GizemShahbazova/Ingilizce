@@ -48,3 +48,10 @@ dialog.reader{width:min(1180px,calc(100% - 30px))}.reader .dialog-heading{grid-t
 .game-frame{display:block;width:100%;height:70dvh;min-height:420px;border:1px solid #dde5e6;border-radius:13px;background:white}
 @media(max-width:680px){.game-grid{grid-template-columns:1fr;gap:12px}.game-choice{min-height:174px;padding:18px}.game-choice>strong{font-size:16px}.game-summary{font-size:12px}dialog.game{width:calc(100% - 14px);padding:13px 14px 19px}.game .dialog-heading{grid-template-columns:67px 1fr;gap:12px;margin-top:12px}.game .dialog-heading>img{width:67px}.game .dialog-heading h2{font-size:19px}.game .dialog-heading p:last-child{font-size:10px}.game-frame{height:68dvh;min-height:360px}}
 @media(prefers-reduced-motion:reduce){.game-choice:hover{transform:none}}
+
+/* 6. sınıf çalışma kağıtları: önce çalışma türü, ardından PDF listesi. */
+.worksheet-group-grid .choice-symbol{background:#fff3d8}
+.worksheet-group-card:nth-child(2) .choice-symbol{background:#e7f7f2}
+.worksheet-group-card:nth-child(3) .choice-symbol{background:#edf0ff}
+.worksheet-group-card:nth-child(4) .choice-symbol{background:#eaf3fb}
+

@@ -19,7 +19,21 @@ const MATERIALS = [
   { id: "game6-vocabulary", section: "games", grade: 6, title: "Vocabulary Challenge", file: "6th_grade_vocabulary_challenge_game.html", format: "game", icon: "🔤", summary: "Okul hayatıyla ilgili kelimeleri pekiştir." },
   { id: "game6-vocabulary-school-life", section: "games", grade: 6, title: "Vocabulary Challenge: School Life", file: "6th_grade_vocabulary_challenge_game2.html", format: "game", icon: "🎯", summary: "Kolay, orta, zor veya karışık seviyeyi seç." },
   { id: "game6-grammar-quest", section: "games", grade: 6, title: "Grammar Quest", file: "6th_grade_grammar_quest_game.html", format: "game", icon: "🧩", summary: "Cümleleri tamamla, dil bilgini dene." },
-  { id: "game6-writing-arcade", section: "games", grade: 6, title: "Writing Arcade", file: "6th_grade_writing_game.html", format: "game", icon: "✏️", summary: "Kelime sıralama, cümle tamamlama ve mektup yazma etkinlikleri." }
+  { id: "game6-writing-arcade", section: "games", grade: 6, title: "Writing Arcade", file: "6th_grade_writing_game.html", format: "game", icon: "✏️", summary: "Kelime sıralama, cümle tamamlama ve mektup yazma etkinlikleri." },
+  {"id": "6-calisma-dilbilgisi-5-dakikada", "section": "worksheets", "grade": 6, "worksheetGroup": "grammar", "title": "5 Dakikada Dilbilgisi", "file": "6_calisma_dilbilgisi_5_dakikada.pdf", "format": "pdf", "pages": 1, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-tekrar-quiz", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "6. Sınıf Quiz", "file": "6_calisma_tekrar_quiz.pdf", "format": "pdf", "pages": 2, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-tekrar-quiz-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "6. Sınıf Quiz - Cevap Anahtarı", "file": "6_calisma_tekrar_quiz_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
+  {"id": "6-calisma-tekrar-genel-1", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Genel Tekrar 1", "file": "6_calisma_tekrar_genel_1.pdf", "format": "pdf", "pages": 2, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-tekrar-genel-1-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Genel Tekrar 1 - Cevap Anahtarı", "file": "6_calisma_tekrar_genel_1_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
+  {"id": "6-calisma-tekrar-fasikul", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Konu Anlatımlı Alıştırma Fasikülü", "file": "6_calisma_tekrar_fasikul.pdf", "format": "pdf", "pages": 6, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-tekrar-fasikul-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Konu Anlatımlı Alıştırma Fasikülü - Cevap Anahtarı", "file": "6_calisma_tekrar_fasikul_cevap.pdf", "format": "pdf", "pages": 2, "label": "Cevap anahtarı", "answerKey": true},
+  {"id": "6-calisma-kelime-eslestirme", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6. Sınıf Kelime Eşleştirme Çalışma Kağıdı", "file": "6_calisma_kelime_eslestirme.pdf", "format": "pdf", "pages": 1, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-kelime-eslestirme-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6. Sınıf Kelime Eşleştirme - Cevap Anahtarı", "file": "6_calisma_kelime_eslestirme_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
+  {"id": "6-calisma-kelime-word-test", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6.1 Word Test", "file": "6_calisma_kelime_word_test.pdf", "format": "pdf", "pages": 1, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-kelime-word-test-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6. Sınıf Word Test - Cevap Anahtarı", "file": "6_calisma_kelime_word_test_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
+  {"id": "6-calisma-kelime-school-life-listesi", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "School Life - Zenginleştirilmiş Kelime Listesi", "file": "6_calisma_kelime_school_life_listesi.pdf", "format": "pdf", "pages": 2, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-okuma-school-life", "section": "worksheets", "grade": 6, "worksheetGroup": "reading", "title": "School Life - Okuma Çalışması", "file": "6_calisma_okuma_school_life.pdf", "format": "pdf", "pages": 4, "label": "Çalışma kağıdı"},
+  {"id": "6-calisma-okuma-school-life-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "reading", "title": "School Life - Okuma Çalışması Cevap Anahtarı", "file": "6_calisma_okuma_school_life_cevap.pdf", "format": "pdf", "pages": 4, "label": "Cevap anahtarı", "answerKey": true}
 ];
 
 const SECTIONS = {
@@ -29,6 +43,12 @@ const SECTIONS = {
   exams: { title: "Örnek Sınavlar", image: "Ornek_Sinavlar.png", singular: "örnek sınav", description: "Örnek sınavlarını görmek için sınıfını seç." }
 };
 const KINDS = { textbook: "Ders Kitapları", workbook: "Çalışma Kitapları" };
+const WORKSHEET_GROUPS = {
+  grammar: { title: "Dilbilgisi Çalışmaları", icon: "🧩" },
+  revision: { title: "Genel Tekrar Çalışmaları", icon: "📝" },
+  vocabulary: { title: "Kelime Çalışmaları", icon: "🔤" },
+  reading: { title: "Okuma Çalışmaları", icon: "📖" }
+};
 const dialog = document.getElementById("resource-dialog");
 const title = document.getElementById("dialog-title");
 const description = document.getElementById("dialog-description");
@@ -72,7 +92,7 @@ function openSection(section, button) {
   if (!SECTIONS[section]) return;
   opener = button;
   trail = [];
-  state = { section, kind: null, grade: null, view: section === "books" ? "types" : "grades", material: null };
+  state = { section, kind: null, grade: null, worksheetGroup: null, view: section === "books" ? "types" : "grades", material: null };
   render();
   dialog.showModal();
   document.body.classList.add("dialog-open");
@@ -110,7 +130,30 @@ function showGradeChoices() {
     const label = element("strong", "", `${grade}. Sınıf`);
     if (grade === 8) label.append(element("span", "grade-caption", "(Seçmeli İngilizce)"));
     button.append(digit, label);
-    button.addEventListener("click", () => navigate({ grade, view: "materials" }));
+    button.addEventListener("click", () => navigate({
+      grade,
+      worksheetGroup: null,
+      view: state.section === "worksheets" && grade === 6 ? "worksheet-groups" : "materials"
+    }));
+    grid.append(button);
+  }
+  content.append(grid);
+}
+
+function showWorksheetGroups() {
+  title.textContent = gradeLabel(state.grade);
+  description.textContent = "PDF dosyalarını görmek için çalışma türünü seç.";
+  const grid = element("div", "choice-grid worksheet-group-grid");
+  for (const [group, details] of Object.entries(WORKSHEET_GROUPS)) {
+    const count = MATERIALS.filter(item => item.section === "worksheets" && item.grade === state.grade && item.worksheetGroup === group).length;
+    const button = element("button", "choice-card worksheet-group-card");
+    button.type = "button";
+    button.dataset.worksheetGroup = group;
+    button.setAttribute("aria-label", details.title + " - " + count + " PDF");
+    const symbol = element("span", "choice-symbol", details.icon);
+    symbol.setAttribute("aria-hidden", "true");
+    button.append(symbol, element("strong", "", details.title), element("span", "", count + " PDF · Dosyaları aç →"));
+    button.addEventListener("click", () => navigate({ worksheetGroup: group, view: "materials" }));
     grid.append(button);
   }
   content.append(grid);
@@ -160,9 +203,10 @@ function showExamLinks(materials) {
 
 function showMaterials() {
   const section = SECTIONS[state.section];
-  title.textContent = gradeLabel(state.grade);
+  const worksheetGroup = WORKSHEET_GROUPS[state.worksheetGroup];
+  title.textContent = worksheetGroup ? worksheetGroup.title : gradeLabel(state.grade);
   description.textContent = state.kind ? KINDS[state.kind] : section.title;
-  const selected = MATERIALS.filter(item => item.section === state.section && item.grade === state.grade && (!state.kind || item.kind === state.kind));
+  const selected = MATERIALS.filter(item => item.section === state.section && item.grade === state.grade && (!state.kind || item.kind === state.kind) && (!state.worksheetGroup || item.worksheetGroup === state.worksheetGroup));
   if (selected.length === 0) {
     const empty = element("div", "empty-state");
     const symbol = element("div", "empty-symbol", "✦");
@@ -171,8 +215,8 @@ function showMaterials() {
     content.append(empty);
     return;
   }
-  if (state.section === "exams") {
-    description.textContent = "Bir dosya seç; açılır pencerede görüntüle veya indir.";
+  if (state.section === "exams" || state.section === "worksheets") {
+    description.textContent = (worksheetGroup ? gradeLabel(state.grade) + " · " + selected.length + " PDF. " : "") + "Bir dosya seç; açılır pencerede görüntüle veya indir.";
     showExamLinks(selected);
     return;
   }
@@ -279,12 +323,18 @@ function render() {
   const section = SECTIONS[state.section];
   art.src = section.image;
   art.alt = "";
-  path.textContent = [section.title, state.kind && KINDS[state.kind], ["reader", "game"].includes(state.view) && gradeLabel(state.grade)].filter(Boolean).join(" / ");
+  path.textContent = [
+    section.title,
+    state.kind && KINDS[state.kind],
+    (["reader", "game"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
+    state.view === "reader" && WORKSHEET_GROUPS[state.worksheetGroup]?.title
+  ].filter(Boolean).join(" / ");
   backButton.hidden = trail.length === 0;
   dialog.classList.toggle("reader", state.view === "reader");
   dialog.classList.toggle("game", state.view === "game");
   if (state.view === "types") showTypeChoices();
   else if (state.view === "grades") showGradeChoices();
+  else if (state.view === "worksheet-groups") showWorksheetGroups();
   else if (state.view === "materials") showMaterials();
   else if (state.view === "reader") showReader(token);
   else if (state.view === "game") showGame(token);
@@ -312,6 +362,7 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 
