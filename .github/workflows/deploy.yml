@@ -24,17 +24,35 @@ jobs:
     steps:
       - name: Depoyu al
         uses: actions/checkout@v6
-      - name: PDF dosyalarını siteye ekle
+      - name: PDF ve dinleme dosyalarını siteye ekle
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
+          shopt -s nullglob nocaseglob
           cp -- *.html *.js *.css site/
-          for pdf in ./*.pdf; do
-            cp -- "$pdf" site/
+          for resource in ./*.pdf ./*.mp3 ./*.m4a ./*.aac ./*.wav ./*.ogg ./*.oga ./*.opus ./*.flac ./*.mp4 ./*.webm ./*.m4v ./*.ogv ./*.mov; do
+            [[ -f "$resource" ]] || continue
+            cp -- "$resource" site/
           done
           test -s site/ingilizce-dersi-6sinif-ders-kitabi.pdf
           test -s site/ingilizce-dersi-6sinif-calisma-kitabi.pdf
+      - name: Dinleme dosyalarının listesini hazırla
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+
+          audio = {".mp3", ".m4a", ".aac", ".wav", ".ogg", ".oga", ".opus", ".flac"}
+          video = {".mp4", ".webm", ".m4v", ".ogv", ".mov"}
+          files = [
+              {"file": path.name, "type": "audio" if path.suffix.lower() in audio else "video"}
+              for path in sorted(Path(".").iterdir(), key=lambda path: path.name.casefold())
+              if path.is_file() and path.suffix.lower() in audio | video
+          ]
+          Path("site/listening-media.json").write_text(
+              json.dumps({"files": files}, ensure_ascii=False),
+              encoding="utf-8"
+          )
       - name: GitHub Pages'i hazırla
         uses: actions/configure-pages@v5
         with:
@@ -46,3 +64,4 @@ jobs:
       - name: Siteyi yayınla
         id: deployment
         uses: actions/deploy-pages@v4
+
