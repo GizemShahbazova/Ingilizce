@@ -10,7 +10,14 @@ const MATERIALS = [
   { id: "exam6-deneme-2", section: "exams", grade: 6, title: "Deneme 2", file: "6_Sinif_Deneme_2.pdf", format: "pdf", pages: 2 },
   { id: "exam6-deneme-2-cevap", section: "exams", grade: 6, title: "Deneme 2 - Cevap Anahtarı", file: "6_Sinif_Deneme_2_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true },
   { id: "exam6-deneme-3", section: "exams", grade: 6, title: "Deneme 3", file: "6_Sinif_Deneme_3.pdf", format: "pdf", pages: 2 },
-  { id: "exam6-deneme-3-cevap", section: "exams", grade: 6, title: "Deneme 3 - Cevap Anahtarı", file: "6_Sinif_Deneme_3_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true }
+  { id: "exam6-deneme-3-cevap", section: "exams", grade: 6, title: "Deneme 3 - Cevap Anahtarı", file: "6_Sinif_Deneme_3_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true },
+  { id: "game6-reading-quest", section: "games", grade: 6, title: "Reading Quest", file: "6th_grade_reading_game.html", format: "game", icon: "📚", summary: "Metinleri oku, okul hayatıyla ilgili görevleri tamamla." },
+  { id: "game6-reading-mission", section: "games", grade: 6, title: "Reading Mission", file: "6th_grade_reading_mission_game.html", format: "game", icon: "📖", summary: "Kısa bir metni okuyup soruları yanıtla." },
+  { id: "game6-routine-builder", section: "games", grade: 6, title: "Routine Builder", file: "6th_grade_routine_builder_game.html", format: "game", icon: "✍️", summary: "Günlük rutininden İngilizce bir paragraf oluştur." },
+  { id: "game6-school-detective", section: "games", grade: 6, title: "School Detective", file: "6th_grade_school_detective_game.html", format: "game", icon: "🔎", summary: "İpuçlarından okul yerlerini ve kulüpleri bul." },
+  { id: "game6-vocabulary", section: "games", grade: 6, title: "Vocabulary Challenge", file: "6th_grade_vocabulary_challenge_game.html", format: "game", icon: "🔤", summary: "Okul hayatıyla ilgili kelimeleri pekiştir." },
+  { id: "game6-vocabulary-school-life", section: "games", grade: 6, title: "Vocabulary Challenge: School Life", file: "6th_grade_vocabulary_challenge_game2.html", format: "game", icon: "🎯", summary: "Kolay, orta, zor veya karışık seviyeyi seç." },
+  { id: "game6-grammar-quest", section: "games", grade: 6, title: "Grammar Quest", file: "6th_grade_grammar_quest_game.html", format: "game", icon: "🧩", summary: "Cümleleri tamamla, dil bilgini dene." }
 ];
 
 const SECTIONS = {
@@ -109,7 +116,26 @@ function showGradeChoices() {
 
 function openMaterial(material) {
   if (material.format === "pdf") navigate({ view: "reader", material });
+  else if (material.format === "game") navigate({ view: "game", material });
   else window.location.assign(localUrl(material.file).href);
+}
+
+function showGameLinks(materials) {
+  const grid = element("div", "game-grid");
+  for (const material of materials) {
+    const button = element("button", "game-choice");
+    button.type = "button";
+    button.dataset.material = material.id;
+    button.setAttribute("aria-label", material.title + " oyununu aç");
+    const symbol = element("span", "game-symbol", material.icon);
+    symbol.setAttribute("aria-hidden", "true");
+    const action = element("span", "game-choice-action", "Oyna →");
+    action.setAttribute("aria-hidden", "true");
+    button.append(symbol, element("strong", "", material.title), element("span", "game-summary", material.summary), action);
+    button.addEventListener("click", () => openMaterial(material));
+    grid.append(button);
+  }
+  content.append(grid);
 }
 
 function showExamLinks(materials) {
@@ -146,6 +172,11 @@ function showMaterials() {
   if (state.section === "exams") {
     description.textContent = "Bir dosya seç; açılır pencerede görüntüle veya indir.";
     showExamLinks(selected);
+    return;
+  }
+  if (state.section === "games") {
+    description.textContent = "Bir oyun seç ve öğrenmeye başla!";
+    showGameLinks(selected);
     return;
   }
   for (const material of selected) {
@@ -207,19 +238,54 @@ function showReader(token) {
     });
 }
 
+function showGame(token) {
+  const material = state.material;
+  const url = localUrl(material.file);
+  title.textContent = material.title;
+  description.textContent = material.summary;
+  const toolbar = element("div", "reader-toolbar");
+  const open = element("a", "", "Yeni sekmede oyna ↗");
+  open.href = url.href;
+  open.target = "_blank";
+  open.rel = "noopener";
+  toolbar.append(open);
+  const note = element("p", "reader-note", "Daha geniş bir ekran için oyunu yeni sekmede açabilirsin.");
+  const status = element("p", "reader-status", "Oyun hazırlanıyor…");
+  status.setAttribute("role", "status");
+  content.append(toolbar, note, status);
+  fetch(url.href, { method: "HEAD" })
+    .then(response => {
+      if (!response.ok) throw new Error("Oyun dosyası bulunamadı");
+      if (token !== renderId || state?.view !== "game" || !dialog.open) return;
+      status.remove();
+      const frame = element("iframe", "game-frame");
+      frame.title = material.title + " oyunu";
+      frame.setAttribute("allow", "clipboard-write");
+      frame.src = url.href;
+      content.append(frame);
+    })
+    .catch(() => {
+      if (token !== renderId || state?.view !== "game" || !dialog.open) return;
+      status.classList.add("error");
+      status.textContent = "Oyun şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
+    });
+}
+
 function render() {
   const token = ++renderId;
   content.replaceChildren();
   const section = SECTIONS[state.section];
   art.src = section.image;
   art.alt = "";
-  path.textContent = [section.title, state.kind && KINDS[state.kind], state.view === "reader" && gradeLabel(state.grade)].filter(Boolean).join(" / ");
+  path.textContent = [section.title, state.kind && KINDS[state.kind], ["reader", "game"].includes(state.view) && gradeLabel(state.grade)].filter(Boolean).join(" / ");
   backButton.hidden = trail.length === 0;
   dialog.classList.toggle("reader", state.view === "reader");
+  dialog.classList.toggle("game", state.view === "game");
   if (state.view === "types") showTypeChoices();
   else if (state.view === "grades") showGradeChoices();
   else if (state.view === "materials") showMaterials();
   else if (state.view === "reader") showReader(token);
+  else if (state.view === "game") showGame(token);
   dialog.scrollTop = 0;
   if (dialog.open) title.focus({ preventScroll: true });
 }
@@ -244,4 +310,5 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 

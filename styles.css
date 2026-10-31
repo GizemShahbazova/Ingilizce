@@ -28,3 +28,23 @@ dialog.reader{width:min(1180px,calc(100% - 30px))}.reader .dialog-heading{grid-t
 @media(max-width:680px){.exam-pdf-link{gap:12px;min-height:85px;padding:15px 13px;border-radius:14px}.exam-pdf-badge{flex-basis:40px;min-height:46px;font-size:10px}.answer-key .exam-pdf-badge{font-size:8px}.exam-pdf-copy strong{font-size:14px}.exam-pdf-copy small{font-size:10px}.exam-pdf-arrow{flex-basis:18px;font-size:20px}}
 @media(prefers-reduced-motion:reduce){.exam-pdf-link:hover{transform:none}}
 
+
+
+/* 6. sınıf oyun seçimi ve açılır oyun alanı */
+.game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.game-choice{display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;padding:20px;border:1px solid var(--line);border-radius:18px;background:white;color:var(--ink);min-height:206px;transition:transform .18s,border-color .18s,box-shadow .18s}
+.game-choice:hover{transform:translateY(-3px);border-color:#a8cfc4;box-shadow:0 8px 20px #1539600c}
+.game-symbol{display:grid;place-items:center;width:47px;height:47px;border-radius:13px;background:#e7f7f2;font-size:25px;margin-bottom:2px}
+.game-choice:nth-child(3n+2) .game-symbol{background:#fff3d8}
+.game-choice:nth-child(3n) .game-symbol{background:#edf0ff}
+.game-choice>strong{font-size:17px;line-height:1.4;letter-spacing:-.2px}
+.game-summary{font-size:12px;line-height:1.7;color:var(--muted)}
+.game-choice-action{font-size:12px;font-weight:700;color:#18745d;margin-top:auto;padding-top:5px}
+ dialog.game{width:min(1200px,calc(100% - 28px))}
+.game .dialog-heading{grid-template-columns:84px 1fr;gap:18px;margin-bottom:15px}
+.game .dialog-heading>img{width:84px}
+.game .dialog-heading h2{font-size:23px}
+.game .dialog-heading p:last-child{margin-top:4px}
+.game-frame{display:block;width:100%;height:70dvh;min-height:420px;border:1px solid #dde5e6;border-radius:13px;background:white}
+@media(max-width:680px){.game-grid{grid-template-columns:1fr;gap:12px}.game-choice{min-height:174px;padding:18px}.game-choice>strong{font-size:16px}.game-summary{font-size:12px}dialog.game{width:calc(100% - 14px);padding:13px 14px 19px}.game .dialog-heading{grid-template-columns:67px 1fr;gap:12px;margin-top:12px}.game .dialog-heading>img{width:67px}.game .dialog-heading h2{font-size:19px}.game .dialog-heading p:last-child{font-size:10px}.game-frame{height:68dvh;min-height:360px}}
+@media(prefers-reduced-motion:reduce){.game-choice:hover{transform:none}}
