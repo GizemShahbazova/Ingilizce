@@ -17,7 +17,8 @@ const MATERIALS = [
   { id: "game6-school-detective", section: "games", grade: 6, title: "School Detective", file: "6th_grade_school_detective_game.html", format: "game", icon: "🔎", summary: "İpuçlarından okul yerlerini ve kulüpleri bul." },
   { id: "game6-vocabulary", section: "games", grade: 6, title: "Vocabulary Challenge", file: "6th_grade_vocabulary_challenge_game.html", format: "game", icon: "🔤", summary: "Okul hayatıyla ilgili kelimeleri pekiştir." },
   { id: "game6-vocabulary-school-life", section: "games", grade: 6, title: "Vocabulary Challenge: School Life", file: "6th_grade_vocabulary_challenge_game2.html", format: "game", icon: "🎯", summary: "Kolay, orta, zor veya karışık seviyeyi seç." },
-  { id: "game6-grammar-quest", section: "games", grade: 6, title: "Grammar Quest", file: "6th_grade_grammar_quest_game.html", format: "game", icon: "🧩", summary: "Cümleleri tamamla, dil bilgini dene." }
+  { id: "game6-grammar-quest", section: "games", grade: 6, title: "Grammar Quest", file: "6th_grade_grammar_quest_game.html", format: "game", icon: "🧩", summary: "Cümleleri tamamla, dil bilgini dene." },
+  { id: "game6-writing-arcade", section: "games", grade: 6, title: "Writing Arcade", file: "6th_grade_writing_game.html", format: "game", icon: "✏️", summary: "Kelime sıralama, cümle tamamlama ve mektup yazma etkinlikleri." }
 ];
 
 const SECTIONS = {
@@ -310,5 +311,6 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
