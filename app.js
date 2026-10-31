@@ -49,6 +49,16 @@ const WORKSHEET_GROUPS = {
   vocabulary: { title: "Kelime Çalışmaları", icon: "🔤" },
   reading: { title: "Okuma Çalışmaları", icon: "📖" }
 };
+// Uzantılar yayın sırasında oluşturulan listeden alınır; özgün dosya adları korunur.
+const LISTENINGS = [
+  { id: "track-1-1", title: "Year 6 Theme 1 Track 1.1" },
+  { id: "track-1-2", title: "Year 6 Theme 1 Track 1.2" },
+  { id: "track-1-3", title: "Year 6 Theme 1 Track 1.3" },
+  { id: "track-1-4", title: "Year 6 Theme 1 Track 1.4" },
+  { id: "track-1-5", title: "Year 6 Theme 1 Track 1.5" },
+  { id: "track-1-6", title: "Year 6 Theme 1 Track 1.6" },
+  { id: "digital-story", title: "Year 6-Theme 1-SCHOOL LIFE-Digital story" }
+];
 const dialog = document.getElementById("resource-dialog");
 const title = document.getElementById("dialog-title");
 const description = document.getElementById("dialog-description");
@@ -60,6 +70,19 @@ let state = null;
 let trail = [];
 let renderId = 0;
 let opener = null;
+let activeMedia = null;
+
+function stopListening() {
+  if (!activeMedia) return;
+  activeMedia.pause();
+  activeMedia.removeAttribute("src");
+  activeMedia.load();
+  activeMedia = null;
+}
+
+function mediaName(file) {
+  return file.normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
 
 function gradeLabel(grade) {
   return grade === 8 ? "8. Sınıf (Seçmeli İngilizce)" : `${grade}. Sınıf`;
@@ -92,7 +115,7 @@ function openSection(section, button) {
   if (!SECTIONS[section]) return;
   opener = button;
   trail = [];
-  state = { section, kind: null, grade: null, worksheetGroup: null, view: section === "books" ? "types" : "grades", material: null };
+  state = { section, kind: null, grade: null, worksheetGroup: null, view: section === "books" ? "types" : "grades", material: null, listening: null };
   render();
   dialog.showModal();
   document.body.classList.add("dialog-open");
@@ -244,6 +267,88 @@ function showMaterials() {
     card.append(copy, button);
     content.append(card);
   }
+  if (state.section === "books" && state.kind === "textbook" && state.grade === 6) showListeningLinks();
+}
+
+function showListeningLinks() {
+  const section = element("section", "listening-section");
+  const heading = element("h3", "", "Dinlemeler");
+  heading.id = "listening-heading";
+  section.setAttribute("aria-labelledby", heading.id);
+  section.append(heading, element("p", "listening-intro", "Theme 1 · School Life. Bir kayıt seç ve oynat."));
+  const list = element("div", "listening-list");
+  for (const listening of LISTENINGS) {
+    const button = element("button", "listening-link");
+    button.type = "button";
+    button.dataset.listening = listening.id;
+    button.setAttribute("aria-label", listening.title + " kaydını aç");
+    const symbol = element("span", "listening-symbol", "▶");
+    symbol.setAttribute("aria-hidden", "true");
+    const copy = element("span", "listening-copy");
+    copy.append(element("strong", "", listening.title), element("small", "", listening.id === "digital-story" ? "Digital story" : "Dinleme kaydı"));
+    const arrow = element("span", "listening-arrow", "→");
+    arrow.setAttribute("aria-hidden", "true");
+    button.append(symbol, copy, arrow);
+    button.addEventListener("click", () => navigate({ view: "listening", listening }));
+    list.append(button);
+  }
+  section.append(list);
+  content.append(section);
+}
+
+function showListening(token) {
+  const listening = state.listening;
+  title.textContent = listening.title;
+  description.textContent = "Dinlemeler · Theme 1 · School Life";
+  const status = element("p", "reader-status", "Kayıt hazırlanıyor…");
+  status.setAttribute("role", "status");
+  content.append(status);
+  // Liste küçüktür; yeni yüklenen kayıtları görmek için her açılışta yenilenir.
+  fetch(localUrl("listening-media.json").href, { cache: "no-cache" })
+    .then(response => {
+      if (!response.ok) throw new Error("Dinleme listesi bulunamadı");
+      return response.json();
+    })
+    .then(index => {
+      if (token !== renderId || state?.view !== "listening" || !dialog.open) return;
+      const files = Array.isArray(index.files) ? index.files : [];
+      const matches = files.filter(item => item && typeof item.file === "string" && !/[/\\]/.test(item.file) && ["audio", "video"].includes(item.type) && mediaName(item.file.slice(0, item.file.lastIndexOf("."))) === mediaName(listening.title));
+      // Aynı kaydın iki biçimi varsa videoyu tercih et.
+      const match = matches.find(item => item.type === "video") || matches[0];
+      if (!match) {
+        status.textContent = "Bu kayıt henüz yüklenmemiş. Yüklendiğinde buradan dinleyebilirsin.";
+        return;
+      }
+      status.remove();
+      const url = localUrl(encodeURIComponent(match.file));
+      const player = element(match.type, "listening-player");
+      player.controls = true;
+      player.preload = "none";
+      player.setAttribute("aria-label", listening.title);
+      if (match.type === "video") player.setAttribute("playsinline", "");
+      player.src = url.href;
+      const toolbar = element("div", "reader-toolbar");
+      const open = element("a", "", "Yeni sekmede aç ↗");
+      open.href = url.href;
+      open.target = "_blank";
+      open.rel = "noopener";
+      const download = element("a", "", "Dosyayı indir ↓");
+      download.href = url.href;
+      download.download = match.file;
+      toolbar.append(open, download);
+      const note = element("p", "reader-note", "Oynat düğmesine basarak başlatabilir, duraklatabilir veya kaldığın yerden devam edebilirsin.");
+      const error = element("p", "reader-status error", "Kayıt bu tarayıcıda oynatılamadı. Yeni sekmede açmayı veya dosyayı indirmeyi deneyebilirsin.");
+      error.setAttribute("role", "status");
+      error.hidden = true;
+      player.addEventListener("error", () => { error.hidden = false; });
+      activeMedia = player;
+      content.append(player, toolbar, note, error);
+    })
+    .catch(() => {
+      if (token !== renderId || state?.view !== "listening" || !dialog.open) return;
+      status.classList.add("error");
+      status.textContent = "Dinlemeler şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
+    });
 }
 
 function showReader(token) {
@@ -319,6 +424,7 @@ function showGame(token) {
 
 function render() {
   const token = ++renderId;
+  stopListening();
   content.replaceChildren();
   const section = SECTIONS[state.section];
   art.src = section.image;
@@ -326,8 +432,9 @@ function render() {
   path.textContent = [
     section.title,
     state.kind && KINDS[state.kind],
-    (["reader", "game"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
-    state.view === "reader" && WORKSHEET_GROUPS[state.worksheetGroup]?.title
+    (["reader", "game", "listening"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
+    state.view === "reader" && WORKSHEET_GROUPS[state.worksheetGroup]?.title,
+    state.view === "listening" && "Dinlemeler"
   ].filter(Boolean).join(" / ");
   backButton.hidden = trail.length === 0;
   dialog.classList.toggle("reader", state.view === "reader");
@@ -338,6 +445,7 @@ function render() {
   else if (state.view === "materials") showMaterials();
   else if (state.view === "reader") showReader(token);
   else if (state.view === "game") showGame(token);
+  else if (state.view === "listening") showListening(token);
   dialog.scrollTop = 0;
   if (dialog.open) title.focus({ preventScroll: true });
 }
@@ -356,12 +464,14 @@ dialog.addEventListener("click", event => {
 });
 dialog.addEventListener("close", () => {
   ++renderId;
+  stopListening();
   content.replaceChildren();
   state = null;
   trail = [];
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 

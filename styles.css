@@ -55,3 +55,22 @@ dialog.reader{width:min(1180px,calc(100% - 30px))}.reader .dialog-heading{grid-t
 .worksheet-group-card:nth-child(3) .choice-symbol{background:#edf0ff}
 .worksheet-group-card:nth-child(4) .choice-symbol{background:#eaf3fb}
 
+/* Ders kitabının altındaki dinlemeler ve ses/video oynatıcı. */
+.listening-section{margin-top:28px;padding-top:25px;border-top:1px solid var(--line)}
+.listening-section h3{font-size:21px;line-height:1.4;letter-spacing:-.4px}
+.listening-intro{margin-top:7px;color:var(--muted);font-size:12px;line-height:1.7}
+.listening-list{display:grid;gap:10px;margin-top:17px}
+.listening-link{display:flex;align-items:center;gap:14px;width:100%;padding:15px 18px;text-align:left;color:var(--ink);border:1px solid var(--line);border-radius:15px;background:white;transition:transform .18s,border-color .18s,box-shadow .18s}
+.listening-link:hover{transform:translateY(-2px);border-color:#b4c8da;box-shadow:0 6px 16px #1539600b}
+.listening-symbol{display:grid;place-items:center;flex:0 0 43px;height:43px;border-radius:12px;background:#fff3d8;color:#8f681f;font-size:16px}
+.listening-copy{min-width:0;flex:1}
+.listening-copy strong{display:block;font-size:14px;font-weight:650;line-height:1.6;overflow-wrap:anywhere}
+.listening-copy small{display:block;margin-top:3px;color:var(--muted);font-size:11px;line-height:1.6}
+.listening-arrow{font-size:21px;color:#59748c}
+.listening-player{display:block;width:100%;margin:8px 0 19px}
+video.listening-player{max-height:60dvh;min-height:200px;border-radius:15px;background:#112b44}
+audio.listening-player{height:54px}
+@media(max-width:680px){.listening-section{margin-top:22px;padding-top:21px}.listening-section h3{font-size:19px}.listening-link{gap:10px;padding:13px 12px}.listening-symbol{flex-basis:37px;height:39px;font-size:14px}.listening-copy strong{font-size:12px}.listening-copy small{font-size:10px}video.listening-player{min-height:170px}}
+@media(prefers-reduced-motion:reduce){.listening-link:hover{transform:none}}
+
+
