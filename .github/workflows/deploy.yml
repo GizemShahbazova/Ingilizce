@@ -24,6 +24,16 @@ jobs:
     steps:
       - name: Depoyu al
         uses: actions/checkout@v6
+      - name: PDF dosyalarını siteye ekle
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          for pdf in ./*.pdf; do
+            cp -- "$pdf" site/
+          done
+          test -s site/ingilizce-dersi-6sinif-ders-kitabi.pdf
+          test -s site/ingilizce-dersi-6sinif-calisma-kitabi.pdf
       - name: GitHub Pages'i hazırla
         uses: actions/configure-pages@v5
         with:
