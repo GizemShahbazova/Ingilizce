@@ -11,6 +11,7 @@ const MATERIALS = [
   { id: "exam6-deneme-2-cevap", section: "exams", grade: 6, title: "Deneme 2 - Cevap Anahtarı", file: "6_Sinif_Deneme_2_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true },
   { id: "exam6-deneme-3", section: "exams", grade: 6, title: "Deneme 3", file: "6_Sinif_Deneme_3.pdf", format: "pdf", pages: 2 },
   { id: "exam6-deneme-3-cevap", section: "exams", grade: 6, title: "Deneme 3 - Cevap Anahtarı", file: "6_Sinif_Deneme_3_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true },
+  { id: "exam6-mebi-hazirlik", section: "exams", grade: 6, title: "MEBİ - Yazılıya Hazırlanıyorum (1. Dönem, 1. Yazılı)", file: "6_sinif_mebi_ornek_yazili.pdf", format: "pdf", pages: 10, label: "Yazılıya hazırlık" },
   { id: "game6-reading-quest", section: "games", grade: 6, title: "Reading Quest", file: "6th_grade_reading_game.html", format: "game", icon: "📚", summary: "Metinleri oku, okul hayatıyla ilgili görevleri tamamla." },
   { id: "game6-reading-mission", section: "games", grade: 6, title: "Reading Mission", file: "6th_grade_reading_mission_game.html", format: "game", icon: "📖", summary: "Kısa bir metni okuyup soruları yanıtla." },
   { id: "game6-routine-builder", section: "games", grade: 6, title: "Routine Builder", file: "6th_grade_routine_builder_game.html", format: "game", icon: "✍️", summary: "Günlük rutininden İngilizce bir paragraf oluştur." },
@@ -148,7 +149,7 @@ function showExamLinks(materials) {
     const badge = element("span", "exam-pdf-badge", material.answerKey ? "CEVAP" : "PDF");
     badge.setAttribute("aria-hidden", "true");
     const copy = element("span", "exam-pdf-copy");
-    copy.append(element("strong", "", material.title), element("small", "", `${material.answerKey ? "Cevap anahtarı" : "Örnek sınav"} · ${material.pages} sayfa`));
+    copy.append(element("strong", "", material.title), element("small", "", `${material.label || (material.answerKey ? "Cevap anahtarı" : "Örnek sınav")} · ${material.pages} sayfa`));
     const arrow = element("span", "exam-pdf-arrow", "↗");
     arrow.setAttribute("aria-hidden", "true");
     button.append(badge, copy, arrow);
@@ -311,6 +312,7 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 
