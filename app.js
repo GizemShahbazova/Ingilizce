@@ -4,7 +4,13 @@
 // Yeni materyaller yalnızca bu sitenin içindeki dosyalara bağlanmalıdır.
 const MATERIALS = [
   { section: "books", kind: "textbook", grade: 6, title: "6. Sınıf İngilizce Ders Kitabı", file: "ingilizce-dersi-6sinif-ders-kitabi.pdf", format: "pdf", cover: "English_Year_6.png" },
-  { section: "books", kind: "workbook", grade: 6, title: "6. Sınıf İngilizce Çalışma Kitabı", file: "ingilizce-dersi-6sinif-calisma-kitabi.pdf", format: "pdf", cover: "English_Year_6.png" }
+  { section: "books", kind: "workbook", grade: 6, title: "6. Sınıf İngilizce Çalışma Kitabı", file: "ingilizce-dersi-6sinif-calisma-kitabi.pdf", format: "pdf", cover: "English_Year_6.png" },
+  { id: "exam6-deneme-1", section: "exams", grade: 6, title: "Deneme 1", file: "6_Sinif_Deneme_1.pdf", format: "pdf", pages: 2 },
+  { id: "exam6-deneme-1-cevap", section: "exams", grade: 6, title: "Deneme 1 - Cevap Anahtarı", file: "6_Sinif_Deneme_1_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true },
+  { id: "exam6-deneme-2", section: "exams", grade: 6, title: "Deneme 2", file: "6_Sinif_Deneme_2.pdf", format: "pdf", pages: 2 },
+  { id: "exam6-deneme-2-cevap", section: "exams", grade: 6, title: "Deneme 2 - Cevap Anahtarı", file: "6_Sinif_Deneme_2_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true },
+  { id: "exam6-deneme-3", section: "exams", grade: 6, title: "Deneme 3", file: "6_Sinif_Deneme_3.pdf", format: "pdf", pages: 2 },
+  { id: "exam6-deneme-3-cevap", section: "exams", grade: 6, title: "Deneme 3 - Cevap Anahtarı", file: "6_Sinif_Deneme_3_Cevap_Anahtari.pdf", format: "pdf", pages: 1, answerKey: true }
 ];
 
 const SECTIONS = {
@@ -101,6 +107,29 @@ function showGradeChoices() {
   content.append(grid);
 }
 
+function openMaterial(material) {
+  if (material.format === "pdf") navigate({ view: "reader", material });
+  else window.location.assign(localUrl(material.file).href);
+}
+
+function showExamLinks(materials) {
+  for (const material of materials) {
+    const button = element("button", "exam-pdf-link" + (material.answerKey ? " answer-key" : ""));
+    button.type = "button";
+    button.dataset.material = material.id;
+    button.setAttribute("aria-label", material.title + " PDF dosyasını aç");
+    const badge = element("span", "exam-pdf-badge", material.answerKey ? "CEVAP" : "PDF");
+    badge.setAttribute("aria-hidden", "true");
+    const copy = element("span", "exam-pdf-copy");
+    copy.append(element("strong", "", material.title), element("small", "", `${material.answerKey ? "Cevap anahtarı" : "Örnek sınav"} · ${material.pages} sayfa`));
+    const arrow = element("span", "exam-pdf-arrow", "↗");
+    arrow.setAttribute("aria-hidden", "true");
+    button.append(badge, copy, arrow);
+    button.addEventListener("click", () => openMaterial(material));
+    content.append(button);
+  }
+}
+
 function showMaterials() {
   const section = SECTIONS[state.section];
   title.textContent = gradeLabel(state.grade);
@@ -114,6 +143,11 @@ function showMaterials() {
     content.append(empty);
     return;
   }
+  if (state.section === "exams") {
+    description.textContent = "Bir dosya seç; açılır pencerede görüntüle veya indir.";
+    showExamLinks(selected);
+    return;
+  }
   for (const material of selected) {
     const card = element("article", "material-card");
     const copy = element("div");
@@ -121,10 +155,7 @@ function showMaterials() {
     const button = element("button", "", material.format === "pdf" ? "Kitabı aç →" : "Kaynağı aç →");
     button.type = "button";
     button.dataset.material = material.kind || material.title;
-    button.addEventListener("click", () => {
-      if (material.format === "pdf") navigate({ view: "reader", material });
-      else window.location.assign(localUrl(material.file).href);
-    });
+    button.addEventListener("click", () => openMaterial(material));
     if (material.cover) {
       const cover = element("img", "material-cover");
       cover.src = material.cover;
@@ -142,7 +173,7 @@ function showReader(token) {
   const material = state.material;
   const url = localUrl(material.file);
   title.textContent = material.title;
-  description.textContent = "Kitabını görüntüle veya cihazına indir.";
+  description.textContent = state.section === "books" ? "Kitabını görüntüle veya cihazına indir." : "PDF dosyasını görüntüle veya cihazına indir.";
   const toolbar = element("div", "reader-toolbar");
   const open = element("a", "", "Yeni sekmede aç ↗");
   open.href = url.href;
@@ -213,3 +244,4 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+

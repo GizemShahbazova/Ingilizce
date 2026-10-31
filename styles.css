@@ -14,3 +14,17 @@ dialog.reader{width:min(1180px,calc(100% - 30px))}.reader .dialog-heading{grid-t
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.resource-card:hover,.primary-button:hover,.choice-card:hover{transform:none}}
 
 .material-cover{width:122px;height:auto;flex-shrink:0;border-radius:9px}.material-card>div{flex:1;min-width:0}@media(max-width:680px){.material-cover{width:150px;margin:0 auto 18px}}
+
+/* Örnek sınavlar: dosya adına basılınca aynı açılır pencerede PDF okunur. */
+.exam-pdf-link{display:flex;align-items:center;gap:16px;width:100%;min-height:90px;padding:18px 20px;text-align:left;color:var(--ink);background:white;border:1px solid var(--line);border-radius:17px;transition:transform .18s,border-color .18s,box-shadow .18s}
+.exam-pdf-link+.exam-pdf-link{margin-top:12px}
+.exam-pdf-link:hover{transform:translateY(-2px);border-color:#b4c8da;box-shadow:0 7px 18px #1539600b}
+.exam-pdf-badge{display:grid;place-items:center;flex:0 0 47px;min-height:52px;border-radius:12px;background:#eaf3fb;color:#265d94;font-size:11px;font-weight:800;letter-spacing:.5px}
+.answer-key .exam-pdf-badge{background:#fff3d8;color:#8f681f;font-size:9px}
+.exam-pdf-copy{display:block;min-width:0;flex:1}
+.exam-pdf-copy strong{display:block;font-size:16px;line-height:1.5;font-weight:650}
+.exam-pdf-copy small{display:block;margin-top:5px;font-size:11px;line-height:1.6;color:var(--muted)}
+.exam-pdf-arrow{flex:0 0 25px;font-size:22px;text-align:right;color:#59748c}
+@media(max-width:680px){.exam-pdf-link{gap:12px;min-height:85px;padding:15px 13px;border-radius:14px}.exam-pdf-badge{flex-basis:40px;min-height:46px;font-size:10px}.answer-key .exam-pdf-badge{font-size:8px}.exam-pdf-copy strong{font-size:14px}.exam-pdf-copy small{font-size:10px}.exam-pdf-arrow{flex-basis:18px;font-size:20px}}
+@media(prefers-reduced-motion:reduce){.exam-pdf-link:hover{transform:none}}
+
