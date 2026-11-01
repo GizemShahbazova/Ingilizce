@@ -102,6 +102,13 @@ audio.listening-player{height:54px}
 .worksheet-frame{height:74dvh}
 @media(max-width:680px){.worksheet-frame{height:72dvh;min-height:400px}}
 
+/* HTML biçimindeki örnek sınavlar. */
+.exam-choice .game-choice-action{color:#24688d}
+.exam-choice:hover{border-color:#b4c8da}
+.exam-frame{height:74dvh}
+@media(max-width:680px){.exam-frame{height:72dvh;min-height:400px}}
+
+
 
 
 

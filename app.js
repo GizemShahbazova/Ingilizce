@@ -43,7 +43,11 @@ const MATERIALS = [
   { id: "story7-silver-whistle", section: "books", kind: "storybook", grade: 7, title: "The Secret of the Silver Whistle", author: "Zeynep Gizem ŞAHBAZ", file: "7th_grade_silver_whistle.html", cover: "7th_grade_silver_whistle_cover.png", format: "story", chapters: 7, questions: 21, summary: "Emma ve Liam ile ipuçlarını takip et; hikayeyi oku, dinle ve soruları çöz." },
   { id: "worksheet7-sports-talking", section: "worksheets", grade: 7, title: "Sports — The Talking Worksheet", file: "7th_grade_sports_interactive_talking_worksheet.html", format: "worksheet", illustration: "sports", summary: "Sporlar, ekipmanlar, sıklık ifadeleri ve Simple Present konularını sesli diyaloglarla çalış.", features: "Sesli anlatım · 4 konu · 10 soru" },
   { id: "worksheet7-appearance-personality-talking", section: "worksheets", grade: 7, title: "Appearance and Personality — Comparatives", file: "7th_grade_appearance_and_personality_interactive_talking_worksheet.html", format: "worksheet", illustration: "comparative", summary: "Resimli ve sesli anlatımla karşılaştırmaları öğren, alıştırmalarla kendini dene.", features: "Sesli anlatım · Resimli çalışma · 5 soru" },
-  { id: "book7-textbook-meb-2025-2026", section: "books", kind: "textbook", grade: 7, title: "7. Sınıf İngilizce Ders Kitabı (MEB, 2025–2026)", file: "2025-2026_7.Sinif_Ingilizce_Ders_Kitabi_MEB.pdf", format: "pdf", cover: "7th_grade_textbook_cover.png", coverAlt: "7. Sınıf İngilizce Ders Kitabı kapağı", coverWidth: 851, coverHeight: 1200 }
+  { id: "book7-textbook-meb-2025-2026", section: "books", kind: "textbook", grade: 7, title: "7. Sınıf İngilizce Ders Kitabı (MEB, 2025–2026)", file: "2025-2026_7.Sinif_Ingilizce_Ders_Kitabi_MEB.pdf", format: "pdf", cover: "7th_grade_textbook_cover.png", coverAlt: "7. Sınıf İngilizce Ders Kitabı kapağı", coverWidth: 851, coverHeight: 1200 },
+  { id: "exam7-her-gune-bir-yazili", section: "exams", grade: 7, title: "Her Güne Bir Yazılı", file: "7th_grade_her_gune_bir_yazili.html", format: "exam", illustration: "frequency", summary: "Appearance and Personality ve Sports konularında üç örnek yazılıyla hazırlan.", features: "3 deneme · Senaryo 2 · Yazdır / PDF" },
+  { id: "worksheet7-revision-mrs-shahbaz", section: "worksheets", grade: 7, title: "Revision with Mrs. Şahbaz", file: "7th_grade_revision_with_mrs_shahbaz.html", format: "worksheet", illustration: "adventure", summary: "Konu anlatımı, örnekler, etkinlikler ve cevap anahtarıyla genel tekrar yap.", features: "9 sayfa · Genel tekrar · Yazdır / PDF", silent: true },
+  { id: "game7-spin-and-win", section: "games", grade: 7, title: "Spin & Win", file: "7th_grade_spin_and_win.html", format: "game", icon: "🎡", illustration: "wheel", summary: "Çarkı çevir, sürpriz kategorilerdeki soruları yanıtla ve puan topla.", features: "6 kategori · Süreli sorular · Rekor" },
+  { id: "game7-who-is-the-suspect", section: "games", grade: 7, title: "Who Is the Suspect?", file: "7th_grade_who_is_the_suspect.html", format: "game", icon: "🕵️", illustration: "personality", summary: "İpuçlarını karşılaştır, şüphelileri incele ve doğru kişiyi bul.", features: "Dedektiflik · İpuçları · Rekor" }
 ];
 
 const SECTIONS = {
@@ -207,12 +211,17 @@ function openMaterial(material) {
   else if (material.format === "game") navigate({ view: "game", material });
   else if (material.format === "story") navigate({ view: "story", material });
   else if (material.format === "worksheet") navigate({ view: "worksheet", material });
+  else if (material.format === "exam") navigate({ view: "exam", material });
   else window.location.assign(localUrl(material.file).href);
 }
 
 // Kapaklar dosyanın içinde taşınır; ayrıca görsel yüklemek gerekmez.
 function gameIllustration(theme) {
   const scenes = {
+    wheel: {
+      background: "#fff0dc", accent: "#cb9050",
+      art: '<path d="M221 271h198" stroke="#d9c5a2" stroke-width="8" stroke-linecap="round"/><path d="M291 231l-18 40m76-40 18 40" stroke="#303d60" stroke-width="11" stroke-linecap="round"/><g stroke="#fffdf9" stroke-width="3"><path d="M320 150V42A108 108 0 0 1 414 96Z" fill="#a5c8ed"/><path d="M320 150l94-54A108 108 0 0 1 414 204Z" fill="#f2a6bb"/><path d="M320 150l94 54A108 108 0 0 1 320 258Z" fill="#ffd17f"/><path d="M320 150v108A108 108 0 0 1 226 204Z" fill="#9ad5bc"/><path d="M320 150l-94 54A108 108 0 0 1 226 96Z" fill="#baa7df"/><path d="M320 150l-94-54A108 108 0 0 1 320 42Z" fill="#8acfd9"/></g><circle cx="320" cy="150" r="108" fill="none" stroke="#303d60" stroke-width="6"/><circle cx="320" cy="150" r="31" fill="#fffdf9" stroke="#303d60" stroke-width="5"/><path d="M312 135l23 15-23 15z" fill="#303d60"/><path d="M306 24h28l-14 33z" fill="#303d60"/><path d="M164 80l7-17 7 17 17 7-17 7-7 17-7-17-17-7zM462 213l5-13 5 13 13 5-13 5-5 13-5-13-13-5z" fill="#e6b64f"/><circle cx="463" cy="82" r="7" fill="#b7a2de"/><circle cx="169" cy="217" r="7" fill="#9ad5bc"/>'
+    },
     personality: {
       background: "#eee9ff", accent: "#8160cb",
       art: '<g transform="rotate(-8 255 159)"><rect x="153" y="61" width="174" height="214" rx="20" fill="#cfc1f1"/><rect x="146" y="53" width="174" height="214" rx="20" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><circle cx="233" cy="122" r="34" fill="#ffd3ae"/><path d="M198 118q0-52 40-40q37 2 30 46l-17-26q-21 24-53 20" fill="#473455"/><circle cx="223" cy="123" r="3" fill="#303d60"/><circle cx="245" cy="123" r="3" fill="#303d60"/><path d="M225 137q9 8 18-1" fill="none" stroke="#ad5b5b" stroke-width="3"/><path d="M183 200q4-50 50-50t50 50" fill="#a8daca"/><path d="M181 221h105m-105 18h73" stroke="#b9c7dc" stroke-width="7" stroke-linecap="round"/></g><g transform="rotate(9 396 161)"><rect x="329" y="89" width="155" height="172" rx="18" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><circle cx="407" cy="144" r="29" fill="#f1b284"/><path d="M378 144q-11-45 25-39q42-6 36 43l-12-27q-19 14-49 23" fill="#303d60"/><path d="M364 218q2-42 43-42t42 42" fill="#f3b5c5"/><path d="M365 238h83" stroke="#c4cae6" stroke-width="7" stroke-linecap="round"/></g><circle cx="304" cy="191" r="45" fill="#d4f3fb" fill-opacity=".72" stroke="#303d60" stroke-width="9"/><path d="M336 224l34 35" stroke="#303d60" stroke-width="16" stroke-linecap="round"/><path d="M283 182q5-18 20-18" fill="none" stroke="white" stroke-width="7" stroke-linecap="round"/>'
@@ -275,22 +284,23 @@ function showGameLinks(materials) {
   content.append(grid);
 }
 
-function showWorksheetLinks(materials) {
+function showInteractiveLinks(materials) {
   const pdfs = materials.filter(material => material.format === "pdf");
   if (pdfs.length) showExamLinks(pdfs);
   const grid = element("div", "game-grid worksheet-interactive-grid");
-  for (const material of materials.filter(item => item.format === "worksheet")) {
-    const button = element("button", "game-choice game-choice-illustrated worksheet-choice");
+  for (const material of materials.filter(item => ["worksheet", "exam"].includes(item.format))) {
+    const exam = material.format === "exam";
+    const button = element("button", "game-choice game-choice-illustrated " + (exam ? "exam-choice" : "worksheet-choice"));
     button.type = "button";
     button.dataset.material = material.id;
-    button.setAttribute("aria-label", material.title + " çalışma kağıdını aç");
+    button.setAttribute("aria-label", material.title + (exam ? " örnek sınavını aç" : " çalışma kağıdını aç"));
     const cover = element("img", "game-cover");
     cover.src = gameIllustration(material.illustration);
     cover.alt = "";
     cover.width = 640;
     cover.height = 320;
     cover.loading = "lazy";
-    const action = element("span", "game-choice-action", "Çalışmayı aç →");
+    const action = element("span", "game-choice-action", exam ? "Sınavı aç →" : "Çalışmayı aç →");
     action.setAttribute("aria-hidden", "true");
     button.append(cover, element("strong", "", material.title), element("span", "game-summary", material.summary), element("span", "game-features", material.features), action);
     button.addEventListener("click", () => openMaterial(material));
@@ -331,9 +341,9 @@ function showMaterials() {
     content.append(empty);
     return;
   }
-  if (state.section === "worksheets" && selected.some(material => material.format === "worksheet")) {
-    description.textContent = "Bir çalışma seç; sesli anlatımı dinle, soruları yanıtla.";
-    showWorksheetLinks(selected);
+  if (["worksheets", "exams"].includes(state.section) && selected.some(material => ["worksheet", "exam"].includes(material.format))) {
+    description.textContent = state.section === "exams" ? "Bir sınav seç; denemeleri incele veya yazdır." : "Bir çalışma seç; konuları tekrar et, alıştırmaları tamamla.";
+    showInteractiveLinks(selected);
     return;
   }
   if (state.section === "exams" || state.section === "worksheets") {
@@ -524,17 +534,18 @@ function showInteractive(token) {
   const view = state.view;
   const story = view === "story";
   const worksheet = view === "worksheet";
+  const exam = view === "exam";
   const url = localUrl(material.file);
   title.textContent = material.title;
   description.textContent = material.summary;
   const toolbar = element("div", "reader-toolbar");
-  const open = element("a", "", story ? "Yeni sekmede oku ↗" : worksheet ? "Yeni sekmede aç ↗" : "Yeni sekmede oyna ↗");
+  const open = element("a", "", story ? "Yeni sekmede oku ↗" : worksheet || exam ? "Yeni sekmede aç ↗" : "Yeni sekmede oyna ↗");
   open.href = url.href;
   open.target = "_blank";
   open.rel = "noopener";
   toolbar.append(open);
-  const note = element("p", "reader-note", story ? "Sesli okuma için hikayenin Listen düğmesini kullan. Daha geniş bir ekran için kitabı yeni sekmede açabilirsin." : worksheet ? "Sesli anlatım için çalışma içindeki konuşma düğmelerini kullan. Çalışmayı yeni sekmede de açabilirsin." : "Daha geniş bir ekran için oyunu yeni sekmede açabilirsin.");
-  const status = element("p", "reader-status", story ? "Hikaye kitabı hazırlanıyor…" : worksheet ? "Çalışma kağıdı hazırlanıyor…" : "Oyun hazırlanıyor…");
+  const note = element("p", "reader-note", story ? "Sesli okuma için hikayenin Listen düğmesini kullan. Daha geniş bir ekran için kitabı yeni sekmede açabilirsin." : exam ? "Deneme 1, 2 veya 3 sekmesini seç. Yazdır / PDF düğmesini kullanabilir, sınavı yeni sekmede de açabilirsin." : worksheet ? (material.silent ? "Sayfa seçicisinden veya önceki/sonraki düğmelerinden ilerleyebilirsin. Yazdır / PDF düğmesi çalışma içinde bulunur." : "Sesli anlatım için çalışma içindeki konuşma düğmelerini kullan. Çalışmayı yeni sekmede de açabilirsin.") : "Daha geniş bir ekran için oyunu yeni sekmede açabilirsin.");
+  const status = element("p", "reader-status", story ? "Hikaye kitabı hazırlanıyor…" : exam ? "Örnek sınav hazırlanıyor…" : worksheet ? "Çalışma kağıdı hazırlanıyor…" : "Oyun hazırlanıyor…");
   status.setAttribute("role", "status");
   content.append(toolbar, note, status);
   fetch(url.href, { method: "HEAD" })
@@ -542,9 +553,9 @@ function showInteractive(token) {
       if (!response.ok) throw new Error("Oyun dosyası bulunamadı");
       if (token !== renderId || state?.view !== view || !dialog.open) return;
       status.remove();
-      const frame = element("iframe", story ? "game-frame story-frame" : worksheet ? "game-frame worksheet-frame" : "game-frame");
-      frame.title = material.title + (story ? " etkileşimli hikaye kitabı" : worksheet ? " etkileşimli çalışma kağıdı" : " oyunu");
-      if (!story && !worksheet) frame.setAttribute("allow", "clipboard-write");
+      const frame = element("iframe", story ? "game-frame story-frame" : exam ? "game-frame exam-frame" : worksheet ? "game-frame worksheet-frame" : "game-frame");
+      frame.title = material.title + (story ? " etkileşimli hikaye kitabı" : exam ? " örnek sınavı" : worksheet ? " etkileşimli çalışma kağıdı" : " oyunu");
+      if (!story && !worksheet && !exam) frame.setAttribute("allow", "clipboard-write");
       if (story || worksheet) activeStory = frame;
       frame.src = url.href;
       content.append(frame);
@@ -552,7 +563,7 @@ function showInteractive(token) {
     .catch(() => {
       if (token !== renderId || state?.view !== view || !dialog.open) return;
       status.classList.add("error");
-      status.textContent = story ? "Hikaye kitabı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : worksheet ? "Çalışma kağıdı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : "Oyun şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
+      status.textContent = story ? "Hikaye kitabı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : exam ? "Örnek sınav şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : worksheet ? "Çalışma kağıdı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : "Oyun şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
     });
 }
 
@@ -567,21 +578,22 @@ function render() {
   path.textContent = [
     section.title,
     state.kind && KINDS[state.kind],
-    (["reader", "game", "listening", "story", "worksheet"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
+    (["reader", "game", "listening", "story", "worksheet", "exam"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
     state.view === "reader" && WORKSHEET_GROUPS[state.worksheetGroup]?.title,
     state.view === "listening" && "Dinlemeler"
   ].filter(Boolean).join(" / ");
   backButton.hidden = trail.length === 0;
   dialog.classList.toggle("reader", state.view === "reader");
-  dialog.classList.toggle("game", ["game", "story", "worksheet"].includes(state.view));
+  dialog.classList.toggle("game", ["game", "story", "worksheet", "exam"].includes(state.view));
   dialog.classList.toggle("story", state.view === "story");
   dialog.classList.toggle("worksheet", state.view === "worksheet");
+  dialog.classList.toggle("exam", state.view === "exam");
   if (state.view === "types") showTypeChoices();
   else if (state.view === "grades") showGradeChoices();
   else if (state.view === "worksheet-groups") showWorksheetGroups();
   else if (state.view === "materials") showMaterials();
   else if (state.view === "reader") showReader(token);
-  else if (["game", "story", "worksheet"].includes(state.view)) showInteractive(token);
+  else if (["game", "story", "worksheet", "exam"].includes(state.view)) showInteractive(token);
   else if (state.view === "listening") showListening(token);
   dialog.scrollTop = 0;
   if (dialog.open) title.focus({ preventScroll: true });
@@ -609,6 +621,7 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 
