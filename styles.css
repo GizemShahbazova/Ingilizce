@@ -73,4 +73,11 @@ audio.listening-player{height:54px}
 @media(max-width:680px){.listening-section{margin-top:22px;padding-top:21px}.listening-section h3{font-size:19px}.listening-link{gap:10px;padding:13px 12px}.listening-symbol{flex-basis:37px;height:39px;font-size:14px}.listening-copy strong{font-size:12px}.listening-copy small{font-size:10px}video.listening-player{min-height:170px}}
 @media(prefers-reduced-motion:reduce){.listening-link:hover{transform:none}}
 
+/* 7. sınıf oyunları: oyun konusunu anlatan, dosyaya gömülü kapaklar. */
+.game-choice-illustrated{overflow:hidden}
+.game-cover{display:block;flex-shrink:0;width:calc(100% + 40px);max-width:none;aspect-ratio:2/1;object-fit:cover;margin:-20px -20px 3px;border-radius:17px 17px 0 0}
+.game-features{display:inline-block;padding:5px 9px;border-radius:8px;background:#f1f5f7;font-size:10px;line-height:1.6;color:#557081}
+@media(max-width:680px){.game-cover{width:calc(100% + 36px);margin:-18px -18px 3px}.game-features{font-size:10px}}
+
+
 

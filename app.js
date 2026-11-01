@@ -33,7 +33,13 @@ const MATERIALS = [
   {"id": "6-calisma-kelime-word-test-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6. Sınıf Word Test - Cevap Anahtarı", "file": "6_calisma_kelime_word_test_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
   {"id": "6-calisma-kelime-school-life-listesi", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "School Life - Zenginleştirilmiş Kelime Listesi", "file": "6_calisma_kelime_school_life_listesi.pdf", "format": "pdf", "pages": 2, "label": "Çalışma kağıdı"},
   {"id": "6-calisma-okuma-school-life", "section": "worksheets", "grade": 6, "worksheetGroup": "reading", "title": "School Life - Okuma Çalışması", "file": "6_calisma_okuma_school_life.pdf", "format": "pdf", "pages": 4, "label": "Çalışma kağıdı"},
-  {"id": "6-calisma-okuma-school-life-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "reading", "title": "School Life - Okuma Çalışması Cevap Anahtarı", "file": "6_calisma_okuma_school_life_cevap.pdf", "format": "pdf", "pages": 4, "label": "Cevap anahtarı", "answerKey": true}
+  {"id": "6-calisma-okuma-school-life-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "reading", "title": "School Life - Okuma Çalışması Cevap Anahtarı", "file": "6_calisma_okuma_school_life_cevap.pdf", "format": "pdf", "pages": 4, "label": "Cevap anahtarı", "answerKey": true},
+  { id: "game7-personality-detective", section: "games", grade: 7, title: "Personality Detective", file: "7th_grade_personality_detective.html", format: "game", icon: "🔎", illustration: "personality", summary: "İpuçlarından kişilik özelliklerini ve dış görünüşü bul.", features: "3 seviye · İlerleme · Rozet" },
+  { id: "game7-comparative-battle", section: "games", grade: 7, title: "Comparative Battle", file: "7th_grade_comparative_battle.html", format: "game", icon: "⚡", illustration: "comparative", summary: "Karşılaştırma cümlelerini tamamla, doğru kişiyi seç.", features: "3 seviye · İlerleme · Rozet" },
+  { id: "game7-sports-equipment", section: "games", grade: 7, title: "Sports Equipment Match", file: "7th_grade_sports_equipment.html", format: "game", icon: "🏅", illustration: "sports", summary: "Sporları doğru ekipmanlarla eşleştir.", features: "3 seviye · İlerleme · Rozet" },
+  { id: "game7-how-often", section: "games", grade: 7, title: "How Often Challenge", file: "7th_grade_how_often_challenge.html", format: "game", icon: "🎯", illustration: "frequency", summary: "Günlük rutinler ve sıklık ifadeleriyle kendini dene.", features: "3 seviye · İlerleme · Rozet" },
+  { id: "game7-english-adventure", section: "games", grade: 7, title: "English Adventure", file: "7th_grade_english_adventure.html", format: "game", icon: "🏆", illustration: "adventure", summary: "Kişilik, spor ve dil bilgisi görevlerini tamamla.", features: "3 seviye · İlerleme · Rozet" },
+  { id: "game7-word-sprint", section: "games", grade: 7, title: "Word Sprint", file: "7th_grade_word_sprint.html", format: "game", icon: "🔤", illustration: "words", summary: "60 saniyede kelimeleri bul, seri yap ve rekorunu geliştir.", features: "3 seviye · 60 saniye · Rekor" }
 ];
 
 const SECTIONS = {
@@ -188,6 +194,39 @@ function openMaterial(material) {
   else window.location.assign(localUrl(material.file).href);
 }
 
+// Kapaklar dosyanın içinde taşınır; ayrıca görsel yüklemek gerekmez.
+function gameIllustration(theme) {
+  const scenes = {
+    personality: {
+      background: "#eee9ff", accent: "#8160cb",
+      art: '<g transform="rotate(-8 255 159)"><rect x="153" y="61" width="174" height="214" rx="20" fill="#cfc1f1"/><rect x="146" y="53" width="174" height="214" rx="20" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><circle cx="233" cy="122" r="34" fill="#ffd3ae"/><path d="M198 118q0-52 40-40q37 2 30 46l-17-26q-21 24-53 20" fill="#473455"/><circle cx="223" cy="123" r="3" fill="#303d60"/><circle cx="245" cy="123" r="3" fill="#303d60"/><path d="M225 137q9 8 18-1" fill="none" stroke="#ad5b5b" stroke-width="3"/><path d="M183 200q4-50 50-50t50 50" fill="#a8daca"/><path d="M181 221h105m-105 18h73" stroke="#b9c7dc" stroke-width="7" stroke-linecap="round"/></g><g transform="rotate(9 396 161)"><rect x="329" y="89" width="155" height="172" rx="18" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><circle cx="407" cy="144" r="29" fill="#f1b284"/><path d="M378 144q-11-45 25-39q42-6 36 43l-12-27q-19 14-49 23" fill="#303d60"/><path d="M364 218q2-42 43-42t42 42" fill="#f3b5c5"/><path d="M365 238h83" stroke="#c4cae6" stroke-width="7" stroke-linecap="round"/></g><circle cx="304" cy="191" r="45" fill="#d4f3fb" fill-opacity=".72" stroke="#303d60" stroke-width="9"/><path d="M336 224l34 35" stroke="#303d60" stroke-width="16" stroke-linecap="round"/><path d="M283 182q5-18 20-18" fill="none" stroke="white" stroke-width="7" stroke-linecap="round"/>'
+    },
+    comparative: {
+      background: "#e6f0ff", accent: "#4c89c9",
+      art: '<path d="M134 273h376" stroke="#b6cee8" stroke-width="5" stroke-linecap="round"/><rect x="433" y="55" width="41" height="213" rx="10" fill="#ffe19c" stroke="#303d60" stroke-width="4"/><path d="M435 81h19m-19 25h12m-12 25h19m-19 25h12m-12 25h19m-19 25h12m-12 25h19" stroke="#a97b38" stroke-width="4"/><circle cx="222" cy="98" r="28" fill="#efb38b"/><path d="M193 94q0-38 30-33q31-4 29 35l-18-17q-21 18-41 15" fill="#3d3657"/><path d="M180 196v-43q0-30 42-30t42 30v43" fill="#8e7ed8" stroke="#303d60" stroke-width="4"/><path d="M199 195l-8 72m54-72 7 72" stroke="#303d60" stroke-width="15" stroke-linecap="round"/><circle cx="354" cy="143" r="26" fill="#ffd5af"/><path d="M328 140q-3-38 29-33q35 0 27 41l-17-24q-15 17-39 16" fill="#955b49"/><path d="M315 222v-35q0-24 39-24t39 24v35" fill="#7fc8ba" stroke="#303d60" stroke-width="4"/><path d="M334 223l-6 43m47-43 5 43" stroke="#303d60" stroke-width="14" stroke-linecap="round"/><path d="M152 88v120m-10-107 10-13 10 13m-20 95 10 12 10-12" fill="none" stroke="#4c89c9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M295 89l22 16-22 16" fill="none" stroke="#e29b4d" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="220" cy="99" r="3" fill="#303d60"/><circle cx="356" cy="145" r="3" fill="#303d60"/>'
+    },
+    sports: {
+      background: "#e0f3ea", accent: "#469b83",
+      art: '<g transform="rotate(27 396 157)"><ellipse cx="395" cy="115" rx="53" ry="70" fill="#fffdf9" stroke="#303d60" stroke-width="7"/><path d="M368 64v104m18-119v134m18-134v134m18-119v104M345 91h100m-103 20h106m-103 20h100m-88 20h76" stroke="#a8c8c4" stroke-width="2"/><path d="M395 186v70" stroke="#303d60" stroke-width="13" stroke-linecap="round"/><path d="M395 218v38" stroke="#efac77" stroke-width="17" stroke-linecap="round"/></g><circle cx="239" cy="174" r="77" fill="#fffdf9" stroke="#303d60" stroke-width="5"/><path d="M228 141l35 6 7 32-29 19-27-23zM191 118l-13 33m-8 43 21 24m51 30 32-6m32-41-2-33m-27-51-29-17" fill="#303d60" stroke="#303d60" stroke-width="5" stroke-linejoin="round"/><path d="M228 141l-37-23m23 57-44 19m71 4 1 50m28-69 36 22m-43-54 14-30" fill="none" stroke="#303d60" stroke-width="3"/><circle cx="436" cy="235" r="30" fill="#ffc58e" stroke="#303d60" stroke-width="4"/><path d="M407 235h58m-29-29v58m-21-51q43 22 0 44m41-44q-43 22 0 44" fill="none" stroke="#b7794b" stroke-width="3"/><path d="M145 264h340" stroke="#b2d6c6" stroke-width="4" stroke-linecap="round"/>'
+    },
+    frequency: {
+      background: "#fff0dc", accent: "#cb9050",
+      art: '<rect x="149" y="76" width="292" height="194" rx="22" fill="#e9cc9e"/><rect x="140" y="66" width="292" height="194" rx="22" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><path d="M142 115h288V89q0-23-23-23H165q-23 0-23 23z" fill="#eea989"/><path d="M192 51v34m182-34v34" stroke="#303d60" stroke-width="9" stroke-linecap="round"/><path d="M182 150h208m-208 41h208m-208 41h208m-173-98v110m70-110v110m70-110v110" stroke="#e4e7e8" stroke-width="3"/><path d="M185 157l8 8 15-19m49 52 8 8 15-19m47-29 8 8 15-19" fill="none" stroke="#469b83" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="432" cy="218" r="66" fill="#b4ded8" stroke="#303d60" stroke-width="5"/><circle cx="432" cy="218" r="52" fill="#fffdf9"/><path d="M432 185v34l24 14" fill="none" stroke="#303d60" stroke-width="6" stroke-linecap="round"/><path d="M432 173v7m0 76v7m-45-45h7m76 0h7" stroke="#a5b6c7" stroke-width="3"/><circle cx="432" cy="218" r="5" fill="#eea989"/>'
+    },
+    adventure: {
+      background: "#fae4e9", accent: "#c87696",
+      art: '<g transform="rotate(-5 300 169)"><path d="M152 69l109 18 104-19 99 16v180l-99-15-104 19-109-18z" fill="#fff7d6" stroke="#303d60" stroke-width="4" stroke-linejoin="round"/><path d="M261 87v181m104-200v181" stroke="#dfd3aa" stroke-width="3"/><path d="M194 212q-37-93 38-88t47 76q-12 36 49 12t68-85" fill="none" stroke="#d98c83" stroke-width="6" stroke-dasharray="4 14" stroke-linecap="round"/><path d="M375 101l31 31m0-31-31 31" stroke="#c6607e" stroke-width="7" stroke-linecap="round"/><path d="M180 158l13-23 15 23zm116-28 14-23 15 23z" fill="#82b8a0"/><path d="M403 214v-49l34 14-34 14" fill="#8cb5de" stroke="#303d60" stroke-width="4" stroke-linejoin="round"/></g><circle cx="441" cy="233" r="48" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><path d="M429 248l27-43-3 50-24-7" fill="#c6607e"/><path d="M429 248l27-43-5 33z" fill="#303d60"/><circle cx="443" cy="233" r="5" fill="#fffdf9"/><path d="M172 58l5-15 5 15 15 5-15 5-5 15-5-15-15-5z" fill="#e2ad57"/>'
+    },
+    words: {
+      background: "#e2f1f7", accent: "#4a91aa",
+      art: '<path d="M314 42l-61 121h58l-29 110 105-150h-65l34-81z" fill="#ffcf70" stroke="#efb54c" stroke-width="3" stroke-linejoin="round"/><g transform="rotate(-12 206 173)"><rect x="149" y="121" width="102" height="108" rx="20" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><text x="200" y="196" text-anchor="middle" font-family="Arial,sans-serif" font-size="61" font-weight="bold" fill="#8e7ed8">A</text></g><g transform="rotate(9 410 190)"><rect x="355" y="139" width="102" height="108" rx="20" fill="#fffdf9" stroke="#303d60" stroke-width="4"/><text x="406" y="214" text-anchor="middle" font-family="Arial,sans-serif" font-size="61" font-weight="bold" fill="#57a58a">B</text></g><circle cx="462" cy="93" r="42" fill="#f1adc0" stroke="#303d60" stroke-width="4"/><circle cx="462" cy="93" r="31" fill="#fffdf9"/><path d="M462 53V40m-12 0h24m18 23 9-10" stroke="#303d60" stroke-width="5" stroke-linecap="round"/><text x="462" y="104" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="bold" fill="#303d60">60</text><path d="M128 106h38m-51 149h53m317-51h32" stroke="#a0c6d6" stroke-width="6" stroke-linecap="round"/>'
+    }
+  };
+  const scene = scenes[theme] || scenes.adventure;
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320"><rect width="640" height="320" fill="' + scene.background + '"/><circle cx="82" cy="65" r="89" fill="white" opacity=".36"/><circle cx="584" cy="294" r="101" fill="white" opacity=".4"/><circle cx="524" cy="72" r="7" fill="' + scene.accent + '" opacity=".4"/><circle cx="100" cy="240" r="5" fill="' + scene.accent + '" opacity=".45"/><path d="M532 159v20m-10-10h20M94 131v16m-8-8h16" stroke="' + scene.accent + '" stroke-width="4" stroke-linecap="round" opacity=".45"/>' + scene.art + '</svg>';
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+}
+
 function showGameLinks(materials) {
   const grid = element("div", "game-grid");
   for (const material of materials) {
@@ -195,11 +234,25 @@ function showGameLinks(materials) {
     button.type = "button";
     button.dataset.material = material.id;
     button.setAttribute("aria-label", material.title + " oyununu aç");
-    const symbol = element("span", "game-symbol", material.icon);
-    symbol.setAttribute("aria-hidden", "true");
+    if (material.illustration) {
+      button.classList.add("game-choice-illustrated");
+      const cover = element("img", "game-cover");
+      cover.src = gameIllustration(material.illustration);
+      cover.alt = "";
+      cover.width = 640;
+      cover.height = 320;
+      cover.loading = "lazy";
+      button.append(cover);
+    } else {
+      const symbol = element("span", "game-symbol", material.icon);
+      symbol.setAttribute("aria-hidden", "true");
+      button.append(symbol);
+    }
     const action = element("span", "game-choice-action", "Oyna →");
     action.setAttribute("aria-hidden", "true");
-    button.append(symbol, element("strong", "", material.title), element("span", "game-summary", material.summary), action);
+    button.append(element("strong", "", material.title), element("span", "game-summary", material.summary));
+    if (material.features) button.append(element("span", "game-features", material.features));
+    button.append(action);
     button.addEventListener("click", () => openMaterial(material));
     grid.append(button);
   }
@@ -471,6 +524,7 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 
