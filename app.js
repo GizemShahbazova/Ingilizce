@@ -39,7 +39,8 @@ const MATERIALS = [
   { id: "game7-sports-equipment", section: "games", grade: 7, title: "Sports Equipment Match", file: "7th_grade_sports_equipment.html", format: "game", icon: "🏅", illustration: "sports", summary: "Sporları doğru ekipmanlarla eşleştir.", features: "3 seviye · İlerleme · Rozet" },
   { id: "game7-how-often", section: "games", grade: 7, title: "How Often Challenge", file: "7th_grade_how_often_challenge.html", format: "game", icon: "🎯", illustration: "frequency", summary: "Günlük rutinler ve sıklık ifadeleriyle kendini dene.", features: "3 seviye · İlerleme · Rozet" },
   { id: "game7-english-adventure", section: "games", grade: 7, title: "English Adventure", file: "7th_grade_english_adventure.html", format: "game", icon: "🏆", illustration: "adventure", summary: "Kişilik, spor ve dil bilgisi görevlerini tamamla.", features: "3 seviye · İlerleme · Rozet" },
-  { id: "game7-word-sprint", section: "games", grade: 7, title: "Word Sprint", file: "7th_grade_word_sprint.html", format: "game", icon: "🔤", illustration: "words", summary: "60 saniyede kelimeleri bul, seri yap ve rekorunu geliştir.", features: "3 seviye · 60 saniye · Rekor" }
+  { id: "game7-word-sprint", section: "games", grade: 7, title: "Word Sprint", file: "7th_grade_word_sprint.html", format: "game", icon: "🔤", illustration: "words", summary: "60 saniyede kelimeleri bul, seri yap ve rekorunu geliştir.", features: "3 seviye · 60 saniye · Rekor" },
+  { id: "story7-silver-whistle", section: "books", kind: "storybook", grade: 7, title: "The Secret of the Silver Whistle", author: "Zeynep Gizem ŞAHBAZ", file: "7th_grade_silver_whistle.html", cover: "7th_grade_silver_whistle_cover.png", format: "story", chapters: 7, questions: 21, summary: "Emma ve Liam ile ipuçlarını takip et; hikayeyi oku, dinle ve soruları çöz." }
 ];
 
 const SECTIONS = {
@@ -48,7 +49,7 @@ const SECTIONS = {
   games: { title: "Etkileşimli Oyunlar", image: "Etkilesimli_Oyunlar.png", singular: "oyun", description: "Oyunları görmek için sınıfını seç." },
   exams: { title: "Örnek Sınavlar", image: "Ornek_Sinavlar.png", singular: "örnek sınav", description: "Örnek sınavlarını görmek için sınıfını seç." }
 };
-const KINDS = { textbook: "Ders Kitapları", workbook: "Çalışma Kitapları" };
+const KINDS = { textbook: "Ders Kitapları", workbook: "Çalışma Kitapları", storybook: "Etkileşimli Hikaye Kitapları" };
 const WORKSHEET_GROUPS = {
   grammar: { title: "Dilbilgisi Çalışmaları", icon: "🧩" },
   revision: { title: "Genel Tekrar Çalışmaları", icon: "📝" },
@@ -77,6 +78,13 @@ let trail = [];
 let renderId = 0;
 let opener = null;
 let activeMedia = null;
+let activeStory = null;
+
+function stopStory() {
+  if (!activeStory) return;
+  try { activeStory.contentWindow?.speechSynthesis?.cancel(); } catch {}
+  activeStory = null;
+}
 
 function stopListening() {
   if (!activeMedia) return;
@@ -131,14 +139,16 @@ function openSection(section, button) {
 function showTypeChoices() {
   title.textContent = "Hangi kitabı arıyorsun?";
   description.textContent = SECTIONS.books.description;
-  const grid = element("div", "choice-grid");
+  const grid = element("div", "choice-grid book-type-grid");
+  const icons = { textbook: "📖", workbook: "✏️", storybook: "📚" };
+  const hints = { textbook: "Ders konularını takip et", workbook: "Alıştırmalarla bilgini pekiştir", storybook: "Hikayeleri oku, dinle ve keşfet" };
   for (const [kind, label] of Object.entries(KINDS)) {
     const button = element("button", "choice-card");
     button.type = "button";
     button.dataset.kind = kind;
-    const symbol = element("span", "choice-symbol", kind === "textbook" ? "📖" : "✏️");
+    const symbol = element("span", "choice-symbol", icons[kind]);
     symbol.setAttribute("aria-hidden", "true");
-    button.append(symbol, element("strong", "", label), element("span", "", kind === "textbook" ? "Ders konularını takip et" : "Alıştırmalarla bilgini pekiştir"));
+    button.append(symbol, element("strong", "", label), element("span", "", hints[kind]));
     button.addEventListener("click", () => navigate({ kind, grade: null, view: "grades" }));
     grid.append(button);
   }
@@ -191,6 +201,7 @@ function showWorksheetGroups() {
 function openMaterial(material) {
   if (material.format === "pdf") navigate({ view: "reader", material });
   else if (material.format === "game") navigate({ view: "game", material });
+  else if (material.format === "story") navigate({ view: "story", material });
   else window.location.assign(localUrl(material.file).href);
 }
 
@@ -287,7 +298,7 @@ function showMaterials() {
     const empty = element("div", "empty-state");
     const symbol = element("div", "empty-symbol", "✦");
     symbol.setAttribute("aria-hidden", "true");
-    empty.append(symbol, element("h3", "", "Henüz içerik eklenmedi"), element("p", "", `Bu sınıf için henüz ${state.kind === "textbook" ? "ders kitabı" : state.kind === "workbook" ? "çalışma kitabı" : section.singular} eklenmedi. Yeni kaynaklar eklendiğinde burada görünecek.`));
+    empty.append(symbol, element("h3", "", "Henüz içerik eklenmedi"), element("p", "", `Bu sınıf için henüz ${state.kind === "textbook" ? "ders kitabı" : state.kind === "workbook" ? "çalışma kitabı" : state.kind === "storybook" ? "etkileşimli hikaye kitabı" : section.singular} eklenmedi. Yeni kaynaklar eklendiğinde burada görünecek.`));
     content.append(empty);
     return;
   }
@@ -299,6 +310,10 @@ function showMaterials() {
   if (state.section === "games") {
     description.textContent = "Bir oyun seç ve öğrenmeye başla!";
     showGameLinks(selected);
+    return;
+  }
+  if (state.kind === "storybook") {
+    showStoryBooks(selected);
     return;
   }
   for (const material of selected) {
@@ -321,6 +336,34 @@ function showMaterials() {
     content.append(card);
   }
   if (state.section === "books" && state.kind === "textbook" && state.grade === 6) showListeningLinks();
+}
+
+function showStoryBooks(materials) {
+  description.textContent = KINDS.storybook + " · Bir kitap seç ve keşfet.";
+  for (const material of materials) {
+    const card = element("article", "story-book-card");
+    const cover = element("img", "story-book-cover");
+    cover.src = localUrl(material.cover).href;
+    cover.alt = material.title + " kitap kapağı";
+    cover.width = 1536;
+    cover.height = 1024;
+    const copy = element("div", "story-book-copy");
+    copy.append(
+      element("span", "material-type", "ETKİLEŞİMLİ HİKAYE KİTABI"),
+      element("h3", "", material.title),
+      element("p", "story-author", material.author),
+      element("p", "story-summary", material.summary),
+      element("p", "story-features", material.chapters + " bölüm · Sesli okuma · " + material.questions + " soru")
+    );
+    const button = element("button", "story-open-button", "Hikayeyi aç →");
+    button.type = "button";
+    button.dataset.material = material.id;
+    button.setAttribute("aria-label", material.title + " hikaye kitabını aç");
+    button.addEventListener("click", () => openMaterial(material));
+    copy.append(button);
+    card.append(cover, copy);
+    content.append(card);
+  }
 }
 
 function showListeningLinks() {
@@ -442,42 +485,46 @@ function showReader(token) {
     });
 }
 
-function showGame(token) {
+function showInteractive(token) {
   const material = state.material;
+  const view = state.view;
+  const story = view === "story";
   const url = localUrl(material.file);
   title.textContent = material.title;
   description.textContent = material.summary;
   const toolbar = element("div", "reader-toolbar");
-  const open = element("a", "", "Yeni sekmede oyna ↗");
+  const open = element("a", "", story ? "Yeni sekmede oku ↗" : "Yeni sekmede oyna ↗");
   open.href = url.href;
   open.target = "_blank";
   open.rel = "noopener";
   toolbar.append(open);
-  const note = element("p", "reader-note", "Daha geniş bir ekran için oyunu yeni sekmede açabilirsin.");
-  const status = element("p", "reader-status", "Oyun hazırlanıyor…");
+  const note = element("p", "reader-note", story ? "Sesli okuma için hikayenin Listen düğmesini kullan. Daha geniş bir ekran için kitabı yeni sekmede açabilirsin." : "Daha geniş bir ekran için oyunu yeni sekmede açabilirsin.");
+  const status = element("p", "reader-status", story ? "Hikaye kitabı hazırlanıyor…" : "Oyun hazırlanıyor…");
   status.setAttribute("role", "status");
   content.append(toolbar, note, status);
   fetch(url.href, { method: "HEAD" })
     .then(response => {
       if (!response.ok) throw new Error("Oyun dosyası bulunamadı");
-      if (token !== renderId || state?.view !== "game" || !dialog.open) return;
+      if (token !== renderId || state?.view !== view || !dialog.open) return;
       status.remove();
-      const frame = element("iframe", "game-frame");
-      frame.title = material.title + " oyunu";
-      frame.setAttribute("allow", "clipboard-write");
+      const frame = element("iframe", story ? "game-frame story-frame" : "game-frame");
+      frame.title = material.title + (story ? " etkileşimli hikaye kitabı" : " oyunu");
+      if (!story) frame.setAttribute("allow", "clipboard-write");
+      if (story) activeStory = frame;
       frame.src = url.href;
       content.append(frame);
     })
     .catch(() => {
-      if (token !== renderId || state?.view !== "game" || !dialog.open) return;
+      if (token !== renderId || state?.view !== view || !dialog.open) return;
       status.classList.add("error");
-      status.textContent = "Oyun şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
+      status.textContent = story ? "Hikaye kitabı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : "Oyun şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
     });
 }
 
 function render() {
   const token = ++renderId;
   stopListening();
+  stopStory();
   content.replaceChildren();
   const section = SECTIONS[state.section];
   art.src = section.image;
@@ -485,19 +532,20 @@ function render() {
   path.textContent = [
     section.title,
     state.kind && KINDS[state.kind],
-    (["reader", "game", "listening"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
+    (["reader", "game", "listening", "story"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
     state.view === "reader" && WORKSHEET_GROUPS[state.worksheetGroup]?.title,
     state.view === "listening" && "Dinlemeler"
   ].filter(Boolean).join(" / ");
   backButton.hidden = trail.length === 0;
   dialog.classList.toggle("reader", state.view === "reader");
-  dialog.classList.toggle("game", state.view === "game");
+  dialog.classList.toggle("game", ["game", "story"].includes(state.view));
+  dialog.classList.toggle("story", state.view === "story");
   if (state.view === "types") showTypeChoices();
   else if (state.view === "grades") showGradeChoices();
   else if (state.view === "worksheet-groups") showWorksheetGroups();
   else if (state.view === "materials") showMaterials();
   else if (state.view === "reader") showReader(token);
-  else if (state.view === "game") showGame(token);
+  else if (["game", "story"].includes(state.view)) showInteractive(token);
   else if (state.view === "listening") showListening(token);
   dialog.scrollTop = 0;
   if (dialog.open) title.focus({ preventScroll: true });
@@ -518,12 +566,14 @@ dialog.addEventListener("click", event => {
 dialog.addEventListener("close", () => {
   ++renderId;
   stopListening();
+  stopStory();
   content.replaceChildren();
   state = null;
   trail = [];
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 
