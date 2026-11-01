@@ -42,7 +42,8 @@ const MATERIALS = [
   { id: "game7-word-sprint", section: "games", grade: 7, title: "Word Sprint", file: "7th_grade_word_sprint.html", format: "game", icon: "🔤", illustration: "words", summary: "60 saniyede kelimeleri bul, seri yap ve rekorunu geliştir.", features: "3 seviye · 60 saniye · Rekor" },
   { id: "story7-silver-whistle", section: "books", kind: "storybook", grade: 7, title: "The Secret of the Silver Whistle", author: "Zeynep Gizem ŞAHBAZ", file: "7th_grade_silver_whistle.html", cover: "7th_grade_silver_whistle_cover.png", format: "story", chapters: 7, questions: 21, summary: "Emma ve Liam ile ipuçlarını takip et; hikayeyi oku, dinle ve soruları çöz." },
   { id: "worksheet7-sports-talking", section: "worksheets", grade: 7, title: "Sports — The Talking Worksheet", file: "7th_grade_sports_interactive_talking_worksheet.html", format: "worksheet", illustration: "sports", summary: "Sporlar, ekipmanlar, sıklık ifadeleri ve Simple Present konularını sesli diyaloglarla çalış.", features: "Sesli anlatım · 4 konu · 10 soru" },
-  { id: "worksheet7-appearance-personality-talking", section: "worksheets", grade: 7, title: "Appearance and Personality — Comparatives", file: "7th_grade_appearance_and_personality_interactive_talking_worksheet.html", format: "worksheet", illustration: "comparative", summary: "Resimli ve sesli anlatımla karşılaştırmaları öğren, alıştırmalarla kendini dene.", features: "Sesli anlatım · Resimli çalışma · 5 soru" }
+  { id: "worksheet7-appearance-personality-talking", section: "worksheets", grade: 7, title: "Appearance and Personality — Comparatives", file: "7th_grade_appearance_and_personality_interactive_talking_worksheet.html", format: "worksheet", illustration: "comparative", summary: "Resimli ve sesli anlatımla karşılaştırmaları öğren, alıştırmalarla kendini dene.", features: "Sesli anlatım · Resimli çalışma · 5 soru" },
+  { id: "book7-textbook-meb-2025-2026", section: "books", kind: "textbook", grade: 7, title: "7. Sınıf İngilizce Ders Kitabı (MEB, 2025–2026)", file: "2025-2026_7.Sinif_Ingilizce_Ders_Kitabi_MEB.pdf", format: "pdf", cover: "7th_grade_textbook_cover.png", coverAlt: "7. Sınıf İngilizce Ders Kitabı kapağı", coverWidth: 851, coverHeight: 1200 }
 ];
 
 const SECTIONS = {
@@ -360,9 +361,9 @@ function showMaterials() {
     if (material.cover) {
       const cover = element("img", "material-cover");
       cover.src = material.cover;
-      cover.alt = "English Year 6";
-      cover.width = 591;
-      cover.height = 275;
+      cover.alt = material.coverAlt || "English Year 6";
+      cover.width = material.coverWidth || 591;
+      cover.height = material.coverHeight || 275;
       card.append(cover);
     }
     card.append(copy, button);
@@ -608,6 +609,7 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 
