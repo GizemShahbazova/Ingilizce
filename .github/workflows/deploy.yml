@@ -30,7 +30,7 @@ jobs:
           set -euo pipefail
           shopt -s nullglob nocaseglob
           cp -- *.html *.js *.css site/
-          for resource in ./*.pdf ./*.mp3 ./*.m4a ./*.aac ./*.wav ./*.ogg ./*.oga ./*.opus ./*.flac ./*.mp4 ./*.webm ./*.m4v ./*.ogv ./*.mov ./*.jpeg; do
+          for resource in ./*.pdf ./*.mp3 ./*.m4a ./*.aac ./*.wav ./*.ogg ./*.oga ./*.opus ./*.flac ./*.mp4 ./*.webm ./*.m4v ./*.ogv ./*.mov ./*.jpeg ./*.png; do
             [[ -f "$resource" ]] || continue
             cp -- "$resource" site/
           done
@@ -64,5 +64,6 @@ jobs:
       - name: Siteyi yayınla
         id: deployment
         uses: actions/deploy-pages@v4
+
 
 
