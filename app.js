@@ -40,7 +40,9 @@ const MATERIALS = [
   { id: "game7-how-often", section: "games", grade: 7, title: "How Often Challenge", file: "7th_grade_how_often_challenge.html", format: "game", icon: "🎯", illustration: "frequency", summary: "Günlük rutinler ve sıklık ifadeleriyle kendini dene.", features: "3 seviye · İlerleme · Rozet" },
   { id: "game7-english-adventure", section: "games", grade: 7, title: "English Adventure", file: "7th_grade_english_adventure.html", format: "game", icon: "🏆", illustration: "adventure", summary: "Kişilik, spor ve dil bilgisi görevlerini tamamla.", features: "3 seviye · İlerleme · Rozet" },
   { id: "game7-word-sprint", section: "games", grade: 7, title: "Word Sprint", file: "7th_grade_word_sprint.html", format: "game", icon: "🔤", illustration: "words", summary: "60 saniyede kelimeleri bul, seri yap ve rekorunu geliştir.", features: "3 seviye · 60 saniye · Rekor" },
-  { id: "story7-silver-whistle", section: "books", kind: "storybook", grade: 7, title: "The Secret of the Silver Whistle", author: "Zeynep Gizem ŞAHBAZ", file: "7th_grade_silver_whistle.html", cover: "7th_grade_silver_whistle_cover.png", format: "story", chapters: 7, questions: 21, summary: "Emma ve Liam ile ipuçlarını takip et; hikayeyi oku, dinle ve soruları çöz." }
+  { id: "story7-silver-whistle", section: "books", kind: "storybook", grade: 7, title: "The Secret of the Silver Whistle", author: "Zeynep Gizem ŞAHBAZ", file: "7th_grade_silver_whistle.html", cover: "7th_grade_silver_whistle_cover.png", format: "story", chapters: 7, questions: 21, summary: "Emma ve Liam ile ipuçlarını takip et; hikayeyi oku, dinle ve soruları çöz." },
+  { id: "worksheet7-sports-talking", section: "worksheets", grade: 7, title: "Sports — The Talking Worksheet", file: "7th_grade_sports_interactive_talking_worksheet.html", format: "worksheet", illustration: "sports", summary: "Sporlar, ekipmanlar, sıklık ifadeleri ve Simple Present konularını sesli diyaloglarla çalış.", features: "Sesli anlatım · 4 konu · 10 soru" },
+  { id: "worksheet7-appearance-personality-talking", section: "worksheets", grade: 7, title: "Appearance and Personality — Comparatives", file: "7th_grade_appearance_and_personality_interactive_talking_worksheet.html", format: "worksheet", illustration: "comparative", summary: "Resimli ve sesli anlatımla karşılaştırmaları öğren, alıştırmalarla kendini dene.", features: "Sesli anlatım · Resimli çalışma · 5 soru" }
 ];
 
 const SECTIONS = {
@@ -78,6 +80,7 @@ let trail = [];
 let renderId = 0;
 let opener = null;
 let activeMedia = null;
+// Sesli hikaye veya çalışma kağıdı kapanırken konuşmayı da durdur.
 let activeStory = null;
 
 function stopStory() {
@@ -202,6 +205,7 @@ function openMaterial(material) {
   if (material.format === "pdf") navigate({ view: "reader", material });
   else if (material.format === "game") navigate({ view: "game", material });
   else if (material.format === "story") navigate({ view: "story", material });
+  else if (material.format === "worksheet") navigate({ view: "worksheet", material });
   else window.location.assign(localUrl(material.file).href);
 }
 
@@ -270,6 +274,30 @@ function showGameLinks(materials) {
   content.append(grid);
 }
 
+function showWorksheetLinks(materials) {
+  const pdfs = materials.filter(material => material.format === "pdf");
+  if (pdfs.length) showExamLinks(pdfs);
+  const grid = element("div", "game-grid worksheet-interactive-grid");
+  for (const material of materials.filter(item => item.format === "worksheet")) {
+    const button = element("button", "game-choice game-choice-illustrated worksheet-choice");
+    button.type = "button";
+    button.dataset.material = material.id;
+    button.setAttribute("aria-label", material.title + " çalışma kağıdını aç");
+    const cover = element("img", "game-cover");
+    cover.src = gameIllustration(material.illustration);
+    cover.alt = "";
+    cover.width = 640;
+    cover.height = 320;
+    cover.loading = "lazy";
+    const action = element("span", "game-choice-action", "Çalışmayı aç →");
+    action.setAttribute("aria-hidden", "true");
+    button.append(cover, element("strong", "", material.title), element("span", "game-summary", material.summary), element("span", "game-features", material.features), action);
+    button.addEventListener("click", () => openMaterial(material));
+    grid.append(button);
+  }
+  content.append(grid);
+}
+
 function showExamLinks(materials) {
   for (const material of materials) {
     const button = element("button", "exam-pdf-link" + (material.answerKey ? " answer-key" : ""));
@@ -300,6 +328,11 @@ function showMaterials() {
     symbol.setAttribute("aria-hidden", "true");
     empty.append(symbol, element("h3", "", "Henüz içerik eklenmedi"), element("p", "", `Bu sınıf için henüz ${state.kind === "textbook" ? "ders kitabı" : state.kind === "workbook" ? "çalışma kitabı" : state.kind === "storybook" ? "etkileşimli hikaye kitabı" : section.singular} eklenmedi. Yeni kaynaklar eklendiğinde burada görünecek.`));
     content.append(empty);
+    return;
+  }
+  if (state.section === "worksheets" && selected.some(material => material.format === "worksheet")) {
+    description.textContent = "Bir çalışma seç; sesli anlatımı dinle, soruları yanıtla.";
+    showWorksheetLinks(selected);
     return;
   }
   if (state.section === "exams" || state.section === "worksheets") {
@@ -489,17 +522,18 @@ function showInteractive(token) {
   const material = state.material;
   const view = state.view;
   const story = view === "story";
+  const worksheet = view === "worksheet";
   const url = localUrl(material.file);
   title.textContent = material.title;
   description.textContent = material.summary;
   const toolbar = element("div", "reader-toolbar");
-  const open = element("a", "", story ? "Yeni sekmede oku ↗" : "Yeni sekmede oyna ↗");
+  const open = element("a", "", story ? "Yeni sekmede oku ↗" : worksheet ? "Yeni sekmede aç ↗" : "Yeni sekmede oyna ↗");
   open.href = url.href;
   open.target = "_blank";
   open.rel = "noopener";
   toolbar.append(open);
-  const note = element("p", "reader-note", story ? "Sesli okuma için hikayenin Listen düğmesini kullan. Daha geniş bir ekran için kitabı yeni sekmede açabilirsin." : "Daha geniş bir ekran için oyunu yeni sekmede açabilirsin.");
-  const status = element("p", "reader-status", story ? "Hikaye kitabı hazırlanıyor…" : "Oyun hazırlanıyor…");
+  const note = element("p", "reader-note", story ? "Sesli okuma için hikayenin Listen düğmesini kullan. Daha geniş bir ekran için kitabı yeni sekmede açabilirsin." : worksheet ? "Sesli anlatım için çalışma içindeki konuşma düğmelerini kullan. Çalışmayı yeni sekmede de açabilirsin." : "Daha geniş bir ekran için oyunu yeni sekmede açabilirsin.");
+  const status = element("p", "reader-status", story ? "Hikaye kitabı hazırlanıyor…" : worksheet ? "Çalışma kağıdı hazırlanıyor…" : "Oyun hazırlanıyor…");
   status.setAttribute("role", "status");
   content.append(toolbar, note, status);
   fetch(url.href, { method: "HEAD" })
@@ -507,17 +541,17 @@ function showInteractive(token) {
       if (!response.ok) throw new Error("Oyun dosyası bulunamadı");
       if (token !== renderId || state?.view !== view || !dialog.open) return;
       status.remove();
-      const frame = element("iframe", story ? "game-frame story-frame" : "game-frame");
-      frame.title = material.title + (story ? " etkileşimli hikaye kitabı" : " oyunu");
-      if (!story) frame.setAttribute("allow", "clipboard-write");
-      if (story) activeStory = frame;
+      const frame = element("iframe", story ? "game-frame story-frame" : worksheet ? "game-frame worksheet-frame" : "game-frame");
+      frame.title = material.title + (story ? " etkileşimli hikaye kitabı" : worksheet ? " etkileşimli çalışma kağıdı" : " oyunu");
+      if (!story && !worksheet) frame.setAttribute("allow", "clipboard-write");
+      if (story || worksheet) activeStory = frame;
       frame.src = url.href;
       content.append(frame);
     })
     .catch(() => {
       if (token !== renderId || state?.view !== view || !dialog.open) return;
       status.classList.add("error");
-      status.textContent = story ? "Hikaye kitabı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : "Oyun şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
+      status.textContent = story ? "Hikaye kitabı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : worksheet ? "Çalışma kağıdı şu anda açılamıyor. Lütfen biraz sonra tekrar dene." : "Oyun şu anda açılamıyor. Lütfen biraz sonra tekrar dene.";
     });
 }
 
@@ -532,20 +566,21 @@ function render() {
   path.textContent = [
     section.title,
     state.kind && KINDS[state.kind],
-    (["reader", "game", "listening", "story"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
+    (["reader", "game", "listening", "story", "worksheet"].includes(state.view) || state.worksheetGroup) && gradeLabel(state.grade),
     state.view === "reader" && WORKSHEET_GROUPS[state.worksheetGroup]?.title,
     state.view === "listening" && "Dinlemeler"
   ].filter(Boolean).join(" / ");
   backButton.hidden = trail.length === 0;
   dialog.classList.toggle("reader", state.view === "reader");
-  dialog.classList.toggle("game", ["game", "story"].includes(state.view));
+  dialog.classList.toggle("game", ["game", "story", "worksheet"].includes(state.view));
   dialog.classList.toggle("story", state.view === "story");
+  dialog.classList.toggle("worksheet", state.view === "worksheet");
   if (state.view === "types") showTypeChoices();
   else if (state.view === "grades") showGradeChoices();
   else if (state.view === "worksheet-groups") showWorksheetGroups();
   else if (state.view === "materials") showMaterials();
   else if (state.view === "reader") showReader(token);
-  else if (["game", "story"].includes(state.view)) showInteractive(token);
+  else if (["game", "story", "worksheet"].includes(state.view)) showInteractive(token);
   else if (state.view === "listening") showListening(token);
   dialog.scrollTop = 0;
   if (dialog.open) title.focus({ preventScroll: true });
@@ -573,6 +608,7 @@ dialog.addEventListener("close", () => {
   document.body.classList.remove("dialog-open");
   if (opener?.isConnected) opener.focus({ preventScroll: true });
 });
+
 
 
 

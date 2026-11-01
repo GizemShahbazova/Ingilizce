@@ -94,6 +94,15 @@ audio.listening-player{height:54px}
 .story-frame{height:72dvh}
 @media(max-width:680px){.book-type-grid .choice-card:nth-child(3){grid-template-columns:43px 1fr;column-gap:12px}.story-book-card{display:block;padding:20px}.story-book-cover{display:block;width:142px;height:270px;margin:0 auto 22px}.story-book-copy h3{font-size:21px}.story-open-button{display:block;width:100%}.story-frame{height:70dvh;min-height:400px}}
 
+/* Sesli ve etkileşimli çalışma kağıtları. */
+.worksheet-interactive-grid{margin-top:2px}
+.exam-pdf-link+.worksheet-interactive-grid{margin-top:18px}
+.worksheet-choice .game-choice-action{color:#856014}
+.worksheet-choice:hover{border-color:#d8bc79}
+.worksheet-frame{height:74dvh}
+@media(max-width:680px){.worksheet-frame{height:72dvh;min-height:400px}}
+
+
 
 
 
