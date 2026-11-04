@@ -21,19 +21,11 @@ const MATERIALS = [
   { id: "game6-grammar-quest", section: "games", grade: 6, title: "Grammar Quest", file: "6th_grade_grammar_quest_game.html", format: "game", icon: "🧩", summary: "Cümleleri tamamla, dil bilgini dene." },
   { id: "game6-writing-arcade", section: "games", grade: 6, title: "Writing Arcade", file: "6th_grade_writing_game.html", format: "game", icon: "✏️", summary: "Kelime sıralama, cümle tamamlama ve mektup yazma etkinlikleri." },
   {"id": "6-calisma-dilbilgisi-5-dakikada", "section": "worksheets", "grade": 6, "worksheetGroup": "grammar", "title": "5 Dakikada Dilbilgisi", "file": "6_calisma_dilbilgisi_5_dakikada.pdf", "format": "pdf", "pages": 1, "label": "Çalışma kağıdı"},
-  {"id": "6-calisma-tekrar-quiz", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "6. Sınıf Quiz", "file": "6_calisma_tekrar_quiz.pdf", "format": "pdf", "pages": 2, "label": "Çalışma kağıdı"},
-  {"id": "6-calisma-tekrar-quiz-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "6. Sınıf Quiz - Cevap Anahtarı", "file": "6_calisma_tekrar_quiz_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
-  {"id": "6-calisma-tekrar-genel-1", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Genel Tekrar 1", "file": "6_calisma_tekrar_genel_1.pdf", "format": "pdf", "pages": 2, "label": "Çalışma kağıdı"},
-  {"id": "6-calisma-tekrar-genel-1-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Genel Tekrar 1 - Cevap Anahtarı", "file": "6_calisma_tekrar_genel_1_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
-  {"id": "6-calisma-tekrar-fasikul", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Konu Anlatımlı Alıştırma Fasikülü", "file": "6_calisma_tekrar_fasikul.pdf", "format": "pdf", "pages": 6, "label": "Çalışma kağıdı"},
-  {"id": "6-calisma-tekrar-fasikul-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "revision", "title": "Konu Anlatımlı Alıştırma Fasikülü - Cevap Anahtarı", "file": "6_calisma_tekrar_fasikul_cevap.pdf", "format": "pdf", "pages": 2, "label": "Cevap anahtarı", "answerKey": true},
   {"id": "6-calisma-kelime-eslestirme", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6. Sınıf Kelime Eşleştirme Çalışma Kağıdı", "file": "6_calisma_kelime_eslestirme.pdf", "format": "pdf", "pages": 1, "label": "Çalışma kağıdı"},
   {"id": "6-calisma-kelime-eslestirme-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6. Sınıf Kelime Eşleştirme - Cevap Anahtarı", "file": "6_calisma_kelime_eslestirme_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
   {"id": "6-calisma-kelime-word-test", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6.1 Word Test", "file": "6_calisma_kelime_word_test.pdf", "format": "pdf", "pages": 1, "label": "Çalışma kağıdı"},
   {"id": "6-calisma-kelime-word-test-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "6. Sınıf Word Test - Cevap Anahtarı", "file": "6_calisma_kelime_word_test_cevap.pdf", "format": "pdf", "pages": 1, "label": "Cevap anahtarı", "answerKey": true},
   {"id": "6-calisma-kelime-school-life-listesi", "section": "worksheets", "grade": 6, "worksheetGroup": "vocabulary", "title": "School Life - Zenginleştirilmiş Kelime Listesi", "file": "6_calisma_kelime_school_life_listesi.pdf", "format": "pdf", "pages": 2, "label": "Çalışma kağıdı"},
-  {"id": "6-calisma-okuma-school-life", "section": "worksheets", "grade": 6, "worksheetGroup": "reading", "title": "School Life - Okuma Çalışması", "file": "6_calisma_okuma_school_life.pdf", "format": "pdf", "pages": 4, "label": "Çalışma kağıdı"},
-  {"id": "6-calisma-okuma-school-life-cevap", "section": "worksheets", "grade": 6, "worksheetGroup": "reading", "title": "School Life - Okuma Çalışması Cevap Anahtarı", "file": "6_calisma_okuma_school_life_cevap.pdf", "format": "pdf", "pages": 4, "label": "Cevap anahtarı", "answerKey": true},
   { id: "game7-personality-detective", section: "games", grade: 7, title: "Personality Detective", file: "7th_grade_personality_detective.html", format: "game", icon: "🔎", illustration: "personality", summary: "İpuçlarından kişilik özelliklerini ve dış görünüşü bul.", features: "3 seviye · İlerleme · Rozet" },
   { id: "game7-comparative-battle", section: "games", grade: 7, title: "Comparative Battle", file: "7th_grade_comparative_battle.html", format: "game", icon: "⚡", illustration: "comparative", summary: "Karşılaştırma cümlelerini tamamla, doğru kişiyi seç.", features: "3 seviye · İlerleme · Rozet" },
   { id: "game7-sports-equipment", section: "games", grade: 7, title: "Sports Equipment Match", file: "7th_grade_sports_equipment.html", format: "game", icon: "🏅", illustration: "sports", summary: "Sporları doğru ekipmanlarla eşleştir.", features: "3 seviye · İlerleme · Rozet" },
@@ -59,7 +51,6 @@ const SECTIONS = {
 const KINDS = { textbook: "Ders Kitapları", workbook: "Çalışma Kitapları", storybook: "Etkileşimli Hikaye Kitapları" };
 const WORKSHEET_GROUPS = {
   grammar: { title: "Dilbilgisi Çalışmaları", icon: "🧩" },
-  revision: { title: "Genel Tekrar Çalışmaları", icon: "📝" },
   vocabulary: { title: "Kelime Çalışmaları", icon: "🔤" },
   reading: { title: "Okuma Çalışmaları", icon: "📖" }
 };
@@ -199,7 +190,8 @@ function showWorksheetGroups() {
     button.setAttribute("aria-label", details.title + " - " + count + " PDF");
     const symbol = element("span", "choice-symbol", details.icon);
     symbol.setAttribute("aria-hidden", "true");
-    button.append(symbol, element("strong", "", details.title), element("span", "", count + " PDF · Dosyaları aç →"));
+    const caption = count ? count + " PDF · Dosyaları aç →" : "Henüz PDF eklenmedi";
+    button.append(symbol, element("strong", "", details.title), element("span", "", caption));
     button.addEventListener("click", () => navigate({ worksheetGroup: group, view: "materials" }));
     grid.append(button);
   }
