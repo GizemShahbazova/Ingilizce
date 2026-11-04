@@ -7,8 +7,9 @@
   <meta name="theme-color" content="#153960">
   <title>İngilizce Kaynak Köşesi</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261102-grade7-materials-1">
+  <link rel="stylesheet" href="styles.css?v=20261104-survey-1">
   <script src="app.js?v=20261102-grade7-materials-1" defer></script>
+  <script src="survey.js?v=20261104-survey-1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#kaynaklar">Kaynaklara geç</a>
@@ -16,6 +17,12 @@
     <div class="container header-inner">
      
       <a class="header-link" href="#kaynaklar">Kaynakları keşfet <span aria-hidden="true">↗</span></a>
+      <button class="survey-trigger" id="survey-trigger" type="button" aria-haspopup="dialog" aria-controls="survey-dialog" hidden>
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M7 9h10M7 13h6"/>
+        </svg>
+        Görüş ve öneri
+      </button>
     </div>
   </header>
 
@@ -69,6 +76,53 @@
 
   <footer class="site-footer"><div class="container footer-inner"><p>İngilizce Kaynak Köşesi</p><p>Small steps. Big progress.</p></div></footer>
 
+  <dialog class="survey-dialog" id="survey-dialog" aria-labelledby="survey-title">
+    <form class="survey-panel" method="dialog">
+      <button class="survey-close" type="submit" aria-label="Duyuruyu kapat">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+      <div class="survey-intro">
+        <div>
+          <span class="survey-kicker">DUYURU</span>
+          <h2 id="survey-title" tabindex="-1">Ödev Takip Sistemi <span>Pilot Uygulama Bilgilendirmesi</span></h2>
+        </div>
+        <svg class="survey-art" viewBox="0 0 152 112" aria-hidden="true" focusable="false">
+          <ellipse cx="73" cy="59" rx="61" ry="43" fill="#ffdce1"/>
+          <path d="M24 38v12m-6-6h12m103 33v14m-7-7h14M30 88v8m-4-4h8" fill="none" stroke="#d88f9b" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="121" cy="24" r="5" fill="#ebbd65"/>
+          <circle cx="119" cy="96" r="3" fill="#d88f9b"/>
+          <g transform="rotate(-9 66 58)">
+            <rect x="40" y="19" width="57" height="79" rx="11" fill="#d09b9e" opacity=".22"/>
+            <rect x="37" y="15" width="57" height="79" rx="11" fill="#fffdf8" stroke="#25456b" stroke-width="2.5"/>
+            <rect x="51" y="10" width="29" height="12" rx="5" fill="#f6c675" stroke="#25456b" stroke-width="2.5"/>
+            <path d="m48 38 4 4 7-8m-11 20 4 4 7-8m-11 20 4 4 7-8" fill="none" stroke="#4b8c74" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M65 39h17M65 55h17M65 71h17" stroke="#b5c5d5" stroke-width="3.6" stroke-linecap="round"/>
+          </g>
+          <path d="M92 48h37a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8h-15l-11 9v-9H92a8 8 0 0 1-8-8V56a8 8 0 0 1 8-8Z" fill="#c34a63" stroke="#fffdf8" stroke-width="3"/>
+          <path d="M96 59h29m-29 9h21" stroke="#fffdf8" stroke-width="2.7" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="survey-copy" tabindex="0" role="region" aria-label="Bilgilendirme metni">
+        <p><strong>Değerli Kullanıcılarımız,</strong></p>
+        <p>Ödev Takip Sistemi pilot uygulama aşamasındadır. Bu süreçte sistemin işleyişi değerlendirilecek, gerekli iyileştirmeler yapıldıktan sonra uygulama okulumuzun tamamının kullanımına açılacaktır.</p>
+        <p>Ödev Takip Sistemimiz içinde yer alan etkinlikler öğretmenlerimiz tarafından hazırlanmakta veya EBA, MEBİ, DİLİM uygulamalarından alınmaktadır.</p>
+        <p>Sistemin geliştirilmesine katkıda bulunmanız bizim için önemlidir. Bu nedenle uygulamaya ilişkin görüş, öneri ve değerlendirmelerinizi paylaşabileceğiniz kısa bir geri bildirim anketi hazırlanmıştır.</p>
+        <p>Katkılarınız için teşekkür ederiz.</p>
+      </div>
+      <div class="survey-actions">
+        <a class="survey-link" id="survey-link" href="https://docs.google.com/forms/d/e/1FAIpQLScEfCypnN_5ZjBcDBvQhki4-VmMXNi06tRO21vXUK3biX_haA/viewform" target="_blank" rel="noopener noreferrer">
+          Görüş ve Öneri Anketine Katıl
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 18 18 6M8 6h10v10"/>
+          </svg>
+        </a>
+        <button class="survey-later" type="submit">Daha sonra</button>
+      </div>
+    </form>
+  </dialog>
+
   <dialog id="resource-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
     <div class="dialog-topbar"><button id="back-button" class="text-button" type="button" hidden><span aria-hidden="true">←</span> Geri</button><button id="close-button" class="close-button" type="button" aria-label="Pencereyi kapat">×</button></div>
     <div class="dialog-heading"><img id="dialog-image" src="Kitaplarim.png" alt="" width="768" height="512"><div><p id="dialog-path" class="dialog-path"></p><h2 id="dialog-title" tabindex="-1">Kitaplarım</h2><p id="dialog-description"></p></div></div>
@@ -77,6 +131,7 @@
   <noscript><p class="noscript-note">Seçim ekranları için JavaScript'i etkinleştirin. <a href="ingilizce-dersi-6sinif-ders-kitabi.pdf">6. sınıf ders kitabı</a> ve <a href="ingilizce-dersi-6sinif-calisma-kitabi.pdf">çalışma kitabını</a> doğrudan açabilirsiniz.</p></noscript>
 </body>
 </html>
+
 
 
 
